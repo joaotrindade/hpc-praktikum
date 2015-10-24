@@ -59,8 +59,7 @@ int main()
     int n2 = dim2;
     int i, j, l, m;
     int ix[dim1], iy[dim1];
-    double a[dim1][dim1], b[dim1][dim1],c[dim1][dim1],e[dim1];
-    double x[dim2], y[dim2], z[dim2], s1, s2, s3;
+    __declspec(align(64)) double a[dim1][dim1], b[dim1][dim1],c[dim1][dim1],e[dim1], x[dim2], y[dim2], z[dim2], s1, s2, s3;
     double result = 0; // Sum up everything
 
 /* initialisation */
