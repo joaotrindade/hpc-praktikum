@@ -59,7 +59,8 @@ int main()
     int n2 = dim2;
     int i, j, l, m;
     int ix[dim1], iy[dim1];
-    __declspec(align(64)) double a[dim1][dim1], b[dim1][dim1],c[dim1][dim1],e[dim1], x[dim2], y[dim2], z[dim2], s1, s2, s3;
+    double a[dim1][dim1], b[dim1][dim1],c[dim1][dim1],e[dim1];
+    double x[dim2], y[dim2], z[dim2], s1, s2, s3;
     double result = 0; // Sum up everything
 
 /* initialisation */
@@ -235,6 +236,8 @@ int bsp1_(double * restrict x, double * restrict y, double* restrict e, int n)
 {
   int i;
 
+  #pragma vector always
+  #pragma ivdep
   for (i=0; i< n; i++) {
     if (x[i] > 0.) { 
        e[i] = x[i] + y[i];
@@ -363,6 +366,7 @@ int bsp10_(double * restrict x, double * restrict e, int n)
 {
   int i;
 
+  #pragma simd
   for (i=0; i < n; i++) {
        e[i] = f_(x[i]);
   }
@@ -378,12 +382,9 @@ double f_(double x)
   return ret_val;
 } /* f_ */
 
-
-
 int bsp11_(double a[restrict][dim1], int n)
 {
   int i, j, ip1;
-
   for (i=0; i < n; i++) { 
      ip1 = i + 1;
      for (j = ip1; j < n; j++) {
@@ -521,7 +522,7 @@ int bsp18_(double * restrict x, double * restrict y, int n)
   for (i = 0; i < n; i++) { 
      y[i] = 1.;
      if (x[i] < 0.) break;
-  }
+  } 
   return 0;
 } /* bsp18_ */
 
@@ -529,7 +530,6 @@ int bsp18_(double * restrict x, double * restrict y, int n)
 int bsp19_(double * restrict x, double * restrict y, int n)
 {
   int i;
-
   for (i = 0; i < n; i++) {
      if (x[i] < 0.) break;
      x[i+1] -=  y[i];
