@@ -34,8 +34,6 @@ void init(double a[3][3], double b[3], double x[3]);
 /** performs gauss elimination */
 void gauss_elimination(double a[3][3], double b[3], double x[3]);
 
-int lu_decomposition(double a[3][3], double l[3][3], double u[3][3]);
-
 struct SoA{ //SoA
     double x[NGLS];
 	double y[NGLS];
@@ -124,46 +122,6 @@ int main() {
 	}
 	printf("Vectorized Gauss: %f   ticks: %f\n", get_ToD_diff_time(time), get_ticks_diff_time(time));
 	
-	// RE - INITIALIZE
-	/*for (i = 0; i < NGLS; i++) {
-		init(a[i], b[i], x[i]);
-	}
-	
-	
-	time = get_time();
-	lu_decomposition(a[0],L,U);
-	for (k = 0; k < NGLS; k++)
-	{
-		y[0] = 1; y[1] = 1; y[2] = 1; 
-		
-		// THIS CAN BE VECTORIZED
-		// L x Y = B
-		for(i=0; i<n; i++)
-    	{
-        	sum = 0; 
-        	for(j=0; j<=i; j++)
-        	{
-            	sum+=L[i][j]*y[j]; 
-        	}
-        	y[i]=b[k][i] / sum;
-    	}
-    	
-    	// THIS CAN BE VECTORIZED
-		// U x X = Y
-		for(i=n-1; i>=0; i--)
-    	{
-        	x[k][i]= y[i];
-        	for(j=i+1; j<n; j++)
-        	{
-            	x[k][i]-=U[i][j]*x[k][j];
-        	}
-        	x[k][i]/=U[i][i];
-    	}
-    	
-		//print_vector("X solved", x[0]);
-	}
-	printf("LU FACTORIZATION: Time elapsed. time: %f   ticks: %f\n", get_ToD_diff_time(time), get_ticks_diff_time(time));*/
-
 	return(0);
 }
 
@@ -221,54 +179,6 @@ void gauss_elimination(double a[3][3], double b[3], double x[3]) {
 		}
 	}
 }
-
-
-/**
-*
-* Code reference "C++ Program to Perform LU Decomposition of any Matrix" 
-* http://www.sanfoundry.com/cpp-program-perform-lu-decomposition-any-matrix/
-*
-**/
-
-int lu_decomposition(double a[3][3], double l[3][3], double u[3][3]) {
-	int i, j, k;
-	int n=3;
-	
-    for (i = 0; i < n; i++)
-    {
-        for (j = 0; j < n; j++)
-        {
-            if (j < i)
-                l[j][i] = 0;
-            else
-            {
-                l[j][i] = a[j][i];
-                for (k = 0; k < i; k++)
-                {
-                    l[j][i] = l[j][i] - l[j][k] * u[k][i];
-                }
-            }
-        }
-        for (j = 0; j < n; j++)
-        {
-            if (j < i)
-                u[i][j] = 0;
-            else if (j == i)
-                u[i][j] = 1;
-            else
-            {
-                u[i][j] = a[i][j] / l[i][i];
-                for (k = 0; k < i; k++)
-                {
-                    u[i][j] = u[i][j] - ((l[i][k] * u[k][j]) / l[i][i]);
-                }
-            }
-        }
-    }
-
-    return 0;
-}
-
 void print_matrix(char* name, double matrix[3][3]) {
 	int i, j;
 	printf("Matrix %s: \n", name);
