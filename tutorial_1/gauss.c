@@ -36,14 +36,16 @@ void gauss_elimination(double a[3][3], double b[3], double x[3]);
 
 int lu_decomposition(double a[3][3], double l[3][3], double u[3][3]);
 
-double a[NGLS][3][3];
-double b[NGLS][3];
-double x[NGLS][3];
-double L[3][3], U[3][3];
-double y[3];
+
 
 int main() {
-
+	// COMPILE WITH
+	//icc -std=c99 -O3 -qopt-report=5 -qopt-report-phase=vec gauss.c timer.h timer.c -o gauss
+	double a[NGLS][3][3];
+	double b[NGLS][3];
+	__declspec(align(64)) double x[NGLS][3], L[3][3], U[3][3];
+	double y[3];
+	
 	int i, j,k;
 	int n=3;
 	double sum;
