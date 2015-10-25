@@ -1,5 +1,6 @@
 /** 
  * matrix matrix multiplication pattern for practical course
+ * Refernce: http://wiki.cs.utexas.edu/rvdg/HowToOptimizeGemm/
  **/
 
 #include "timer.h"
@@ -31,7 +32,7 @@ int main(int argc, char **argv)
 	/*char logfile_name[100];
 	FILE *logfile_handle;*/
 
-	n = 500;
+	n = 500; //default value if not provided by user using console 
 	if(argc > 1){
 		n = atoi(argv[1]);
 	}
@@ -57,6 +58,7 @@ int main(int argc, char **argv)
 	}
 	memset(c, 0, mem_size);
 
+        /* time variable is a structure which contains tv(timeofday) and ticks(number of clock ticks elapsed since the start of the program) */
 	time_marker_t time = get_time();
 	double flops;
 
