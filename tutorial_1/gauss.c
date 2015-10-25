@@ -18,12 +18,10 @@
 /* print a 3x3 matrix */
 void print_matrix(char* name, double matrix[3][3]);
 
-void lu_2nd(double A[3][3], double L[3][3], double U[3][3]);
 
 /* print a 3d vector */
 void print_vector(char* name, double vec[3]);
 
-void decomposeSerial(double A[3][3], long n);
 
 /**
  *  initialisation: generates the following LGS:
@@ -46,7 +44,7 @@ double y[3];
 
 int main() {
 
-	int i, j;
+	int i, j,k;
 	int n=3;
 	double sum;
 	time_marker_t time;
@@ -56,54 +54,51 @@ int main() {
 	}
 
 	time = get_time();
-	/*for (i = 0; i < NGLS; i++) {
+	for (i = 0; i < NGLS; i++) {
 		gauss_elimination(a[i], b[i], x[i]);
-	}*/
-	
-	
-	//gauss_elimination(a[0], b[0], x[0]);
-	//init(a[0], b[0], x[0]);
-	lu_decomposition(a[0],L,U);
-
-	
-	y[0]=1;
-	y[1]=1;
-	y[2]=1;
-	
-	
-	// THIS CAN BE VECTORIZED
-	// L x Y = B
-	for(i=0; i<n; i++)
-    {
-        sum = 0; 
-        for(j=0; j<=i; j++)
-        {
-        	printf("L[%d][%d] = %f --- y[%d] = %f\n",i,j,L[i][j],j,y[j]);
-            sum+=L[i][j]*y[j]; 
-			printf("entrou i:%d j:%d sum:%f\n",i,j,sum);
-        }
-        y[i]=b[0][i] / sum;
-        printf("y[i] = %f\n",y[i]);
-    }
-
-	print_vector("Y solved", y);
-	
-	
-	// THIS CAN BE VECTORIZED
-	// U x X = Y
-	for(i=n-1; i>=0; i--)
-    {
-        x[0][i]= y[i];
-        for(j=i+1; j<n; j++)
-        {
-            x[0][i]-=U[i][j]*x[0][j];
-        }
-        x[0][i]/=U[i][i];
-    }
-	
-	print_vector("X solved", x[0]);
-	
+	}
 	printf("NAIV: Time elapsed. time: %f   ticks: %f\n", get_ToD_diff_time(time), get_ticks_diff_time(time));
+	
+	// RE - INITIALIZE
+	for (i = 0; i < NGLS; i++) {
+		init(a[i], b[i], x[i]);
+	}
+	
+	
+	time = get_time();
+	lu_decomposition(a[0],L,U);
+	for (k = 0; k < NGLS; k++)
+	{
+		y[0] = 1; y[1] = 1; y[2] = 1; 
+		
+		// THIS CAN BE VECTORIZED
+		// L x Y = B
+		for(i=0; i<n; i++)
+    	{
+        	sum = 0; 
+        	for(j=0; j<=i; j++)
+        	{
+            	sum+=L[i][j]*y[j]; 
+        	}
+        	y[i]=b[k][i] / sum;
+    	}
+    	
+    	// THIS CAN BE VECTORIZED
+		// U x X = Y
+		for(i=n-1; i>=0; i--)
+    	{
+        	x[k][i]= y[i];
+        	for(j=i+1; j<n; j++)
+        	{
+            	x[k][i]-=U[i][j]*x[k][j];
+        	}
+        	x[k][i]/=U[i][i];
+    	}
+    	
+		//print_vector("X solved", x[0]);
+	}
+	printf("LU FACTORIZATION: Time elapsed. time: %f   ticks: %f\n", get_ToD_diff_time(time), get_ticks_diff_time(time));
+
 	return(0);
 }
 
@@ -132,7 +127,6 @@ void init(double a[3][3], double b[3], double x[3]) {
 void gauss_elimination(double a[3][3], double b[3], double x[3]) {
 	int n = 3;
 	int i,j,k;
-	print_matrix("gauss before", a);
 	
 	for (i = 0; i < n; i++) {
 
@@ -150,8 +144,6 @@ void gauss_elimination(double a[3][3], double b[3], double x[3]) {
 		}
 	}
 	
-	print_matrix("gauss mid", a);
-	
 
 	for (i = n-1; i >= 0; i--) {
 		x[i] = b[i];
@@ -159,15 +151,12 @@ void gauss_elimination(double a[3][3], double b[3], double x[3]) {
 			x[i] -= a[i][j] * x[j];
 		}
 	}
-	print_matrix("gauss after", a);
-	print_vector("x after gauss",x);
 }
 
 int lu_decomposition(double a[3][3], double l[3][3], double u[3][3]) {
 	int i, j, k;
 	int n=3;
-	print_matrix("LU Before",a);
-
+	
     for (i = 0; i < n; i++)
     {
         for (j = 0; j < n; j++)
@@ -200,79 +189,8 @@ int lu_decomposition(double a[3][3], double l[3][3], double u[3][3]) {
         }
     }
 
-
-
-	print_matrix("L After 1st",l);
-	print_matrix("U After 1st",u);
-	
     return 0;
 }
-
-void lu_2nd(double A[3][3], double L[3][3], double U[3][3]) {
-
-	int i, j, k;
-	int n=3;
-	//print_matrix("LU Before",A);
-	
-	for(j=0; j<n; j++)
-    {
-        for(i=0; i<n; i++)
-        {
-            if(i<=j)
-            {
-                U[i][j]=A[i][j];
-                for(k=0; k<i-1; k++)
-                    U[i][j]-=L[i][k]*U[k][j];
-                if(i==j)
-                    L[i][j]=1;
-                else
-                    L[i][j]=0;
-            }
-            else
-            {
-                L[i][j]=A[i][j];
-                for(k=0; k<=j-1; k++)
-                    L[i][j]-=L[i][k]*U[k][j];
-                L[i][j]/=U[j][j];
-                U[i][j]=0;
-            }
-        }
-    }
-    print_matrix("L After 2nd",L);
-	print_matrix("U After 2nd",U);
-}
-
-
-void decomposeSerial(double A[3][3], long n)
-{
-	printf("DECOMPOSE SEQUENTIAL CALLED");
-	long i,j,k;
-	for(k=0;k<n;k++){
-		for(j=k+1;j<n;j++)
-			A[k][j]=A[k][j]/A[k][k];
-
-		for(i=k+1;i<n;i++)
-			for(j=k+1;j<n;j++)
-				A[i][j]=A[i][j] - A[i][k] * A[k][j];
-	}
-	
-	for(i=0;i<n;i++){
-		for(j=i;j<n;j++){
-			if(i==j){
-				k=i+1;
-				A[i][j]=4*k-3;
-			}
-			else{
-				A[i][j]=A[i][i]+1;
-				A[j][i]=A[i][i]+1;
-			}
-		}
-	}
-	
-		print_matrix("A After",A);
-}
-
-
 
 void print_matrix(char* name, double matrix[3][3]) {
 	int i, j;
