@@ -153,6 +153,14 @@ void gauss_elimination(double a[3][3], double b[3], double x[3]) {
 	}
 }
 
+
+/**
+*
+* Code reference "C++ Program to Perform LU Decomposition of any Matrix" 
+* http://www.sanfoundry.com/cpp-program-perform-lu-decomposition-any-matrix/
+*
+**/
+
 int lu_decomposition(double a[3][3], double l[3][3], double u[3][3]) {
 	int i, j, k;
 	int n=3;
