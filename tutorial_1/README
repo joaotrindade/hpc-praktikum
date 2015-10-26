@@ -1,0 +1,29 @@
+~~~~~~~~~~~~~~~~~
+README
+~~~~~~~~~~~~~~~~~
+
+João Trindade
+Chen-Yin Wu
+Mantosh Kumar
+
+~~~~~~~~~~~~~~~~~
+Exercise 2.
+~~~~~~~~~~~~~~~~~
+
+vector-before.opt -> compiler log before changes
+vector-after.opt  -> compiler log after changes
+
+Logs were generated with: icc -std=c99 -restrict -O3 -ip -ip_no_inlining -qopt-report=5 -qopt-report-phase=vec -opt_report_filevector.opt -opt_report_phaseall vector.c
+
+~~~~~~~~~~~~~~~~~
+Exercise 3 and 4
+~~~~~~~~~~~~~~~~~
+
+To compile all.
+$ make all
+
+gauss.c -> original gauss implementation
+gauss-vecto.c -> gauss with vectorisation
+lu-factorization -> LU-Factorization experiment
+
+
