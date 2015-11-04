@@ -3,12 +3,10 @@
  **/
 
 #include "timer.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <omp.h>
-#include <sys/time.h>
 
 void print_list(double *data, int length){
 	int i;
@@ -19,7 +17,6 @@ void print_list(double *data, int length){
 
 void quicksort(double *data, int length){
 	if (length <= 1) return;
-	//printf("Hello World from thread = %d\n", omp_get_thread_num());
 	//print_list(data, length);
 
 	double pivot = data[0];
@@ -51,29 +48,6 @@ void quicksort(double *data, int length){
 	
 	#pragma omp task final((length - left) < 10000)
 	quicksort(&(data[left]), length - left);
-	
-
-	//printf("right: %d, left: %d, length: %d\n", right,left,length-left);
-	/* recursion */
-	/*if (right > 10000)
-	{
-		//printf("task created 1\n");
-		#pragma omp task
-		quicksort(data, right);
-	}
-	else {
-		quicksort(data, right);
-	}
-	
-	if (length-left > 10000)
-	{
-		//printf("task created 2\n");
-		#pragma omp task
-		quicksort(&(data[left]), length - left);
-	}
-	else {
-		quicksort(&(data[left]), length - left);
-	}*/
 }
 
 int check(double *data, int length){
@@ -119,8 +93,6 @@ int main(int argc, char **argv)
 		#pragma omp single nowait
 		quicksort(data, length);
 	}
-	
-		
 
 	/*print_list(data, length);*/
 	if(check(data, length) != 0)
