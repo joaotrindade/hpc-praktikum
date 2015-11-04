@@ -45,9 +45,17 @@ void quicksort(double *data, int length){
 		data[right] = pivot;
 	}
 
+
+	#pragma omp task final(right < 10000)
+	quicksort(data, right);
+	
+	#pragma omp task final((length - left) < 10000)
+	quicksort(&(data[left]), length - left);
+	
+
 	//printf("right: %d, left: %d, length: %d\n", right,left,length-left);
 	/* recursion */
-	if (right > 10000)
+	/*if (right > 10000)
 	{
 		//printf("task created 1\n");
 		#pragma omp task
@@ -65,7 +73,7 @@ void quicksort(double *data, int length){
 	}
 	else {
 		quicksort(&(data[left]), length - left);
-	}
+	}*/
 }
 
 int check(double *data, int length){
@@ -83,15 +91,13 @@ int main(int argc, char **argv)
 	int mem_size;
 
 	int i, j, k, n_threads;
-	n_threads=4;
+	n_threads=2;
 	length = 100000000;
 	if(argc > 2){
 		length = atoi(argv[1]);
 		n_threads = atoi(argv[2]);
 	}
 	omp_set_num_threads(n_threads);
-	//omp_set_dynamic (0);
-	//omp_set_nested (1);
 
 	data = (double*)malloc(length * sizeof(double));
 	if(0 == data){
