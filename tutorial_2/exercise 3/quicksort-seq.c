@@ -3,10 +3,10 @@
  **/
 
 #include "timer.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <omp.h>
 
 void print_list(double *data, int length){
 	int i;
@@ -17,6 +17,7 @@ void print_list(double *data, int length){
 
 void quicksort(double *data, int length){
 	if (length <= 1) return;
+
 	//print_list(data, length);
 
 	double pivot = data[0];
@@ -42,11 +43,10 @@ void quicksort(double *data, int length){
 		data[right] = pivot;
 	}
 
+	//print_list(data, length);
 
-	#pragma omp task final(right < 10000)
+	/* recursion */
 	quicksort(data, right);
-	
-	#pragma omp task final((length - left) < 10000)
 	quicksort(&(data[left]), length - left);
 }
 
@@ -64,14 +64,12 @@ int main(int argc, char **argv)
 
 	int mem_size;
 
-	int i, j, k, n_threads;
-	n_threads=2;
-	length = 100000000;
-	if(argc > 2){
+	int i, j, k;
+
+	length = 10000000;
+	if(argc > 1){
 		length = atoi(argv[1]);
-		n_threads = atoi(argv[2]);
 	}
-	omp_set_num_threads(n_threads);
 
 	data = (double*)malloc(length * sizeof(double));
 	if(0 == data){
@@ -84,21 +82,19 @@ int main(int argc, char **argv)
 	for (i = 0; i < length; i++){
 		data[i] = (double)rand() / (double)RAND_MAX;
 	}
-	
+
 	time_marker_t time = get_time();
 	
 	//print_list(data, length);
-	#pragma omp parallel num_threads(n_threads)
-	{
-		#pragma omp single nowait
-		quicksort(data, length);
-	}
+
+	quicksort(data, length);	
+
+	/*print_list(data, length);
+	if(check(data, length) != 0)
+		printf("ERROR\n");*/
+
 	printf("Size of dataset: %d, elapsed time[s] %e \n", length, get_ToD_diff_time(time));
 
-	/*print_list(data, length);*/
-	if(check(data, length) != 0)
-		printf("ERROR\n");
-	
 	return(0);
 }
 
