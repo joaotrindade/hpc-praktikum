@@ -22,10 +22,5 @@ int main (int argc, char *argv[])
 	
 	pi = area * 4 / n;
 
-	cout << setprecision(18) << "PI = " << pi << endl << endl;
-	
-	cout << "Press enter to continue ...";
-	cin.get(c);
-	cin.get(c);
-		
+	cout << setprecision(18) << "PI = " << pi << endl;		
 }

@@ -12,6 +12,10 @@ int main (int argc, char *argv[])
 	int i, n;
 	char c;
 
+	cout << "Number of threads ? ";
+	cin >> n;
+	omp_set_num_threads(n);
+	
 	cout << "Number of divisions ? "; 
 	cin >> n; 
 	area = 0.0;
@@ -24,10 +28,5 @@ int main (int argc, char *argv[])
 	
 	pi = area * 4 / n;
 
-	cout << setprecision(18) << "PI = " << pi << endl << endl;
-	
-	cout << "Press enter to continue ...";
-	cin.get(c);
-	cin.get(c);
-		
+	cout << setprecision(18) << "PI = " << pi << endl;
 }
