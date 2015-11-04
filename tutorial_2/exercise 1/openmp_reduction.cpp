@@ -11,7 +11,7 @@ int main (int argc, char *argv[])
 	double area, pi, x;
 	int i, n;
 	char c;
-
+	cout << "Available processors: " << omp_get_num_procs() << endl;
 	cout << "Number of threads ? ";
 	cin >> n;
 	omp_set_num_threads(n);
