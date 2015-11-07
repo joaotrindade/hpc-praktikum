@@ -10,8 +10,8 @@ import numpy as np
 # 4 5
 # Note: remove the newline from last line of txt files
 
-file1_data = np.loadtxt('file1.txt')
-file2_data = np.loadtxt('file2.txt')
+file1_data = np.loadtxt('sequential_result.txt')
+file2_data = np.loadtxt('parallelize_result.txt')
 
 # plot the first column as x, and second column as y
 # use pylab to plot x and y as red circles
@@ -20,16 +20,16 @@ file2_data = np.loadtxt('file2.txt')
 p1 = pyp.plot(file1_data[:,0], file1_data[:,1], 'r')
 p2 = pyp.plot(file2_data[:,0], file2_data[:,1], 'g')
         
-pylab.title('Simple cosine')
-pylab.xlabel('time (s)')
-pylab.ylabel('cos(4t)')
+pylab.title('OpenMP vs Non OpenMP matrix computational time')
+pylab.xlabel('Matrix input size N(n*n)*(n*n)')
+pylab.ylabel('Time(second)')
 
 pylab.grid(True)
 
 #let python select the best position for legend
-pyp.legend([p1[0],p2[0]], ['Mon','Tue'], 'best', numpoints=1)
+pyp.legend([p1[0],p2[0]], ['No OpenMP','OpenMP'], 'best', numpoints=1)
 
-pyp.savefig("MyFirstPlot.png")
+pyp.savefig("Seq_VS_Para.png")
 
 # show the plot on the screen
 pylab.show()

@@ -47,7 +47,7 @@ int main(int argc, char **argv)
 	}
 
 	//sprintf(logfile_name, "logfile_dgemm.txt");
-	logfile_handle = fopen("./sequential_result.txt", "a+");
+	logfile_handle = fopen("./parallelize_result.txt", "a+");
 	if(logfile_handle == NULL)
 	{
 		printf("\nWarning : Fix path of log file, nothing is being recorded\n");
@@ -63,7 +63,7 @@ int main(int argc, char **argv)
 	}
 
 	/* initialisation */
-	#pragma omp parallel for default(none) shared(n, a, b) private(i, j)
+	//#pragma omp parallel for default(none) shared(n, a, b) private(i, j)
 	for (i = 0; i < n; i++){
 		for (j = 0; j < n; j++){
 			*(a + i * n + j) = (double)i + (double)j;
@@ -71,14 +71,14 @@ int main(int argc, char **argv)
 		}
 	}
 
-	#pragma omp barrier
+	//#pragma omp barrier
 
 	memset(c, 0, mem_size);
 
 	time_marker_t time = get_time();
 	double flops;
 
-	#pragma omp parallel for default(none) shared(block_size, n, a, b, c) private(i, j, k, ii, jj, kk)
+	#pragma omp parallel for schedule(dynamic) default(none) shared(block_size, n, a, b, c) private(i, j, k, ii, jj, kk)
 	for(i = 0; i < n; i += block_size){
 		for(j = 0; j < n; j += block_size){
 			for(k = 0; k < n; k += block_size){
@@ -99,6 +99,7 @@ int main(int argc, char **argv)
 
 	flops = 2.0 * n * n * n;
 
+	printf("OpenMP: Problem size = %d, cache block size = %d :\n",n, block_size);
 	result = print_flops(flops, time);
 	fprintf(logfile_handle, "%d %e\n", n, result);
 

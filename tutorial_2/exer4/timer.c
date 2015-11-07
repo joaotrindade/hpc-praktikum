@@ -19,11 +19,15 @@ time_marker_t get_time() {
 
 
 double get_ToD_diff_time(time_marker_t time) {
+	double res;
 	struct timeval tmp;
 	gettimeofday(&tmp, NULL);
 	tmp.tv_sec -= time.tv.tv_sec;
 	tmp.tv_usec -= time.tv.tv_usec;
-	return ((double)tmp.tv_sec + (double)(tmp.tv_usec)*1e-6);
+	res = (double)tmp.tv_sec + (double)tmp.tv_usec*1e-6;
+	//return ((double)tmp.tv_sec + (double)(tmp.tv_usec)*1e-6);
+	//return (double)tmp.tv_sec + (double)tmp.tv_usec*1e-6;
+	return res;
 }
 
 
@@ -33,7 +37,9 @@ double get_ticks_diff_time(time_marker_t time) {
 }
 
 double print_flops(int flop, time_marker_t time) {
+	//double val =  (double) flop / get_ToD_diff_time(time);
+	double val =  (double) flop / get_ticks_diff_time(time);
 	printf("FLOPS with clock(): %e \n", (double) flop / get_ticks_diff_time(time));
-	printf("FLOPS with timeofday(): %e \n", (double) flop / get_ToD_diff_time(time));
-	return ((double) flop / get_ToD_diff_time(time));
+	printf("FLOPS with timeofday(): %e \n", val);
+	return val;
 }

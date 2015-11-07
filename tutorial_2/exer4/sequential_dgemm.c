@@ -1,7 +1,5 @@
 /** 
- * matrix matrix multiplication pattern for practical course
- * Reference for parallelization while ensuring that each cache-block is handled by only one thread : 
- * 	http://www.netlib.org/utk/papers/autoblock/node2.html
+ * matrix matrix multiplication pattern (seuential) for practical course
  **/
 
 #include "timer.h"
@@ -78,6 +76,7 @@ int main(int argc, char **argv)
 
 	flops = 2.0 * n * n * n;
 
+	printf("Non OpenMP: Problem size = %d :\n",n);
 	result = print_flops(flops, time);
 	fprintf(logfile_handle, "%d %e\n", n, result);
 

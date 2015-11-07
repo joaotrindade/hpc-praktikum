@@ -9,8 +9,8 @@ parallelize_dgemm.o: parallelize_dgemm.c timer.o
 sequential.out: dgemm.o timer.o
 	gcc -g -fopenmp -o sequential.out dgemm.o timer.o
 
-dgemm.o: dgemm.c timer.o
-	gcc -g -O0 -fopenmp -c -o dgemm.o dgemm.c
+dgemm.o: sequential_dgemm.c timer.o
+	gcc -g -O0 -fopenmp -c -o dgemm.o sequential_dgemm.c
 
 timer.o: timer.c
 	gcc -g -O0 -fopenmp -c -o timer.o timer.c
@@ -20,4 +20,5 @@ clean:
 	rm -rf cachegrind.out.*
 	rm -rf cg.out
 	rm -rf sequential.out
+	rm -rf parallelize.out
 	rm -rf *.txt
