@@ -28,9 +28,11 @@ int main(int argc, char **argv)
 	int mem_size;
 
 	int i, j, k;
+	 
+	double result;
 
-	/*char logfile_name[100];
-	FILE *logfile_handle;*/
+	//char logfile_name[1000];
+	FILE *logfile_handle;
 
 	n = 500;
 	if(argc > 1){
@@ -38,7 +40,11 @@ int main(int argc, char **argv)
 	}
 
 	//sprintf(logfile_name, "logfile_dgemm.txt");
-	//logfile_handle = freopen(logfile_name, "w", stdout);
+	logfile_handle = fopen("./sequential_result.txt", "a+");
+	if(logfile_handle == NULL)
+	{
+		printf("\nFix path of log file, nothing is being recorded\n");
+	}
 
 	mem_size = n * n * sizeof(double);
 	a = (double*)malloc(mem_size);
@@ -71,7 +77,10 @@ int main(int argc, char **argv)
 
 	flops = 2.0 * n * n * n;
 
-	print_flops(flops, time);
+	result = print_flops(flops, time);
+	fprintf(logfile_handle, "%d %e\n", n, result);
+
+	fclose(logfile_handle);
 
 	return(0);
 }

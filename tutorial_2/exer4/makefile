@@ -1,7 +1,7 @@
-all: sequencial.out
+all: sequential.out
 
-sequencial.out: dgemm.o timer.o
-	gcc -g -fopenmp -o sequencial.out dgemm.o timer.o
+sequential.out: dgemm.o timer.o
+	gcc -g -fopenmp -o sequential.out dgemm.o timer.o
 	rm -rf *.o
 
 dgemm.o: dgemm.c timer.o
@@ -14,4 +14,5 @@ clean:
 	rm -rf *.o
 	rm -rf cachegrind.out.*
 	rm -rf cg.out
-	rm -rf sequencial.out
+	rm -rf sequential.out
+	rm -rf *.txt

@@ -52,6 +52,6 @@ double get_ticks_diff_time(time_marker_t time);
 /**
  * calculate and print the FLOPS, taking the number of floating point operations and the time.
  */
-void print_flops(int flop, time_marker_t time);
+double print_flops(int flop, time_marker_t time);
 
 #endif /* TIMER_H */

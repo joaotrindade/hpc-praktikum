@@ -8,7 +8,7 @@ import numpy as np
 # 0 1
 # 1 2
 # 4 5
-# Note: remove blank lines in txt files
+# Note: remove the newline from last line of txt files
 
 file1_data = np.loadtxt('file1.txt')
 file2_data = np.loadtxt('file2.txt')
