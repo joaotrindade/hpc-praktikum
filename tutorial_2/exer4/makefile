@@ -1,8 +1,13 @@
-all: sequential.out
+all: sequential.out parallelize.out
+
+parallelize.out: parallelize_dgemm.o timer.o
+	gcc -g -fopenmp -o parallelize.out parallelize_dgemm.o timer.o
+
+parallelize_dgemm.o: parallelize_dgemm.c timer.o
+	gcc -g -O0 -fopenmp -c -o parallelize_dgemm.o parallelize_dgemm.c
 
 sequential.out: dgemm.o timer.o
 	gcc -g -fopenmp -o sequential.out dgemm.o timer.o
-	rm -rf *.o
 
 dgemm.o: dgemm.c timer.o
 	gcc -g -O0 -fopenmp -c -o dgemm.o dgemm.c

@@ -29,8 +29,11 @@ int main(int argc, char **argv)
 	int mem_size;
 
 	int i, j, k;
+	int ii, jj, kk;
 	 
 	double result;
+
+	int block_size = 8;
 
 	//char logfile_name[1000];
 	FILE *logfile_handle;
@@ -39,12 +42,15 @@ int main(int argc, char **argv)
 	if(argc > 1){
 		n = atoi(argv[1]);
 	}
+	if(argc > 2){
+		block_size = atoi(argv[2]);
+	}
 
 	//sprintf(logfile_name, "logfile_dgemm.txt");
 	logfile_handle = fopen("./sequential_result.txt", "a+");
 	if(logfile_handle == NULL)
 	{
-		printf("\nFix path of log file, nothing is being recorded\n");
+		printf("\nWarning : Fix path of log file, nothing is being recorded\n");
 	}
 
 	mem_size = n * n * sizeof(double);
@@ -57,24 +63,39 @@ int main(int argc, char **argv)
 	}
 
 	/* initialisation */
+	#pragma omp parallel for default(none) shared(n, a, b) private(i, j)
 	for (i = 0; i < n; i++){
 		for (j = 0; j < n; j++){
 			*(a + i * n + j) = (double)i + (double)j;
 			*(b + i * n + j) = (double)(n - i) + (double)(n - j);
 		}
 	}
+
+	#pragma omp barrier
+
 	memset(c, 0, mem_size);
 
 	time_marker_t time = get_time();
 	double flops;
 
-	for(i = 0; i < n; i++){
-		for(j = 0; j < n; j++){
-			for(k = 0; k < n; k++){
-				c[i * n + j] += a[i * n + k] * b[k * n + j];
+	#pragma omp parallel for default(none) shared(block_size, n, a, b, c) private(i, j, k, ii, jj, kk)
+	for(i = 0; i < n; i += block_size){
+		for(j = 0; j < n; j += block_size){
+			for(k = 0; k < n; k += block_size){
+
+				for(ii = i; ii < min(i + block_size, n); ii++) {
+					for(jj = j; jj < min(j + block_size, n); jj++) {
+						for(kk = k; kk < min(k + block_size, n); kk++) {
+							c[ii * n + jj] += a[ii * n + kk] * b[kk * n + jj];
+						}
+					}
+				}
+
 			}
 		}
 	}
+
+	#pragma omp barrier
 
 	flops = 2.0 * n * n * n;
 
