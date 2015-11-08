@@ -28,7 +28,7 @@ pylab.grid(True)
 #let python select the best position for legend
 pyp.legend([p2[0]], ['OpenMP'], 'best', numpoints=1)
 
-pyp.savefig("sacaling_speedup_VS_threads.png")
+pyp.savefig("./generated_plots/sacaling_speedup_VS_threads.png")
 
 # show the plot on the screen
 pylab.show()

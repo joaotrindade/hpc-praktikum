@@ -30,7 +30,7 @@ pylab.grid(True)
 #let python select the best position for legend
 pyp.legend([p1[0],p2[0]], ['No OpenMP','OpenMP'], 'best', numpoints=1)
 
-pyp.savefig("sacaling_Seq_VS_Para.png")
+pyp.savefig("./generated_plots/sacaling_Seq_VS_Para.png")
 
 # show the plot on the screen
 pylab.show()
