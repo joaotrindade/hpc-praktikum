@@ -19,6 +19,6 @@ clean:
 	rm -rf *.o
 	rm -rf cachegrind.out.*
 	rm -rf cg.out
-	rm -rf sequential.out
-	rm -rf parallelize.out
+	rm -rf *.out
 	rm -rf *.txt
+	rm -rf *.png

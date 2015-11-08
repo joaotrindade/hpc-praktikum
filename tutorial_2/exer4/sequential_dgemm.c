@@ -78,6 +78,7 @@ int main(int argc, char **argv)
 
 	printf("Non OpenMP: Problem size = %d :\n",n);
 	result = print_flops(flops, time);
+	printf("---------------------------------");
 	fprintf(logfile_handle, "%d %e\n", n, result);
 
 	fclose(logfile_handle);

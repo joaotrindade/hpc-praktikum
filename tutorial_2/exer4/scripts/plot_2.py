@@ -20,7 +20,7 @@ file2_data = np.loadtxt('log_openmp_time_prlm_sz.txt')
 p1 = pyp.plot(file1_data[:,0], file1_data[:,1], 'r')
 p2 = pyp.plot(file2_data[:,0], file2_data[:,1], 'g')
         
-pylab.title('OpenMP vs Non OpenMP matrix computational time')
+pylab.title('Weak Scaling: Comptation time vs problem size')
 pylab.xlabel('Matrix input size N(n*n)*(n*n)')
 pylab.ylabel('Time(second)')
 
@@ -29,7 +29,7 @@ pylab.grid(True)
 #let python select the best position for legend
 pyp.legend([p1[0],p2[0]], ['No OpenMP','OpenMP'], 'best', numpoints=1)
 
-pyp.savefig("Seq_VS_Para.png")
+pyp.savefig("weak_sacaling_Seq_VS_Para.png")
 
 # show the plot on the screen
 pylab.show()
