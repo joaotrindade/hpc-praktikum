@@ -1,0 +1,29 @@
+t1221ag@mac-snb17:~/Tutorial2/Exercise2> ./stream_omp_l3_cache 
+-------------------------------------------------------------
+This system uses 8 bytes per DOUBLE PRECISION word.
+-------------------------------------------------------------
+Array size = 833000, Offset = 0
+Total memory required = 19.1 MB.
+Each test is run 10 times, but only
+the *best* time for each is used.
+-------------------------------------------------------------
+Number of Threads requested = 1
+-------------------------------------------------------------
+Your clock granularity/precision appears to be 1 microseconds.
+Each test below will take on the order of 711 microseconds.
+   (= 711 clock ticks)
+Increase the size of the arrays if this shows that
+you are not getting at least 20 clock ticks per test.
+-------------------------------------------------------------
+WARNING -- The above is only a rough guideline.
+For best results, please be sure you know the
+precision of your system timer.
+-------------------------------------------------------------
+Function      Rate (MB/s)   Avg time     Min time     Max time
+Copy:       13982.4121       0.0010       0.0010       0.0010
+Scale:      19430.5470       0.0007       0.0007       0.0008
+Add:        11872.0835       0.0017       0.0017       0.0017
+Triad:      12455.8119       0.0016       0.0016       0.0017
+-------------------------------------------------------------
+Solution Validates
+-------------------------------------------------------------
