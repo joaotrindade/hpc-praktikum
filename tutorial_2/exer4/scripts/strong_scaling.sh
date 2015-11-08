@@ -11,7 +11,7 @@ prblm_size=700
 block_size=16
 num_th=2
 
-while [ "$prblm_size" -lt 1200 ]
+while [ "$num_th" -lt 500 ]
 do
    export OMP_NUM_THREADS=$num_th
    ./parallelize.out $prblm_size $block_size

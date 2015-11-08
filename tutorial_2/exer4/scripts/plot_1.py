@@ -25,16 +25,16 @@ p2 = pyp.plot(file2_data[:,0], file2_data[:,1], 'b')
 p3 = pyp.plot(file3_data[:,0], file3_data[:,1], 'g')
 p4 = pyp.plot(file4_data[:,0], file4_data[:,1], 'r')
         
-pylab.title('OpenMP vs Non OpenMP matrix (num threads fixed)')
+pylab.title('Weak Scaling')
 pylab.xlabel('Matrix input size N(n*n)*(n*n)')
 #pylab.ylabel('Computation Time(second)')
 
 pylab.grid(True)
 
 #let python select the best position for legend
-pyp.legend([p1[0],p2[0],p3[0],p4[0]], ['No OpenMP(Time)','OpenMP(Time)', 'Efficiency', 'Speedup'], 'best', numpoints=1)
+pyp.legend([p1[0],p2[0],p3[0],p4[0]], ['No OpenMP(Time-sec)','OpenMP(Time-sec)', 'Efficiency', 'Speedup'], 'best', numpoints=1)
 
-pyp.savefig("./generated_plots/Seq_VS_Para.png")
+pyp.savefig("./generated_plots/scaling_time_eff_speedup_VS_size.png")
 
 # show the plot on the screen
 pylab.show()
