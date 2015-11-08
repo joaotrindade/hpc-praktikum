@@ -1,0 +1,5 @@
+Instructions.
+Please start by compiling every file with: make all
+Run ./quicksort <problem_size> <number_of_threads>
+OR
+Run the script test_prob_size.sh, this script will execute the quicksort program for a problem size of 2’000’000 (2 Bilion) starting with 2 threads, up to 28 threads.

@@ -1,4 +1,4 @@
-all: quicksort seq
+all: clean upquicksort seq
 
 seq: quicksort-seq.c
 	icc quicksort-seq.c timer.c -o quicksort-seq.out
