@@ -14,6 +14,5 @@ block_size=8
 while [ "$prblm_size" -lt 1500 ]
 do
    prblm_size=`expr $prblm_size + 50 `
-   ./sequential.out $prblm_size
    ./parallelize.out $prblm_size $block_size
 done
