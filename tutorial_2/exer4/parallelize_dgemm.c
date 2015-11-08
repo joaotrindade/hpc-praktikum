@@ -37,11 +37,11 @@ int main(int argc, char **argv)
 	double speedup,
 	       eff;
 
-	int block_size = 8;
+	int block_size = 16;
 	int num_thread = 0;
 
 	//char logfile_name[1000];
-	FILE *log_non_opemp_time_vs_prblmSize,    /* for non-OpenMP : Problem size vs time */
+	FILE *log_non_openmp_time_vs_prblmSize,   /* for non-OpenMP : Problem size vs time */
 	     *log_openmp_prblmSize_vs_time,       /* for OpenMP : Problem size vs time */
 	     *log_openmp_time_vs_threads,         /* for OpenMP: time vs num of threads */
 	     *log_openmp_speedup_vs_threads,      /* for OpenMP: speedup vs number of threads */
@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 	     *log_openmp_eff_vs_prblm_size,       /* for OpenMP: eff vs problem size */
 	     *log_openmp_speedup_vs_prblm_size;   /* for OpenMP: speedup vs problem size */
 
-	n = 500; /* problem size */
+	n = 500; /* default problem size */
 	double flops;
 
 	/* Default values if nothing is given by command prompt */
@@ -67,7 +67,7 @@ int main(int argc, char **argv)
 	//sprintf(logfile_name, "logfile_dgemm.txt");
 	
 	/* Opening file descriptors */
-	log_non_opemp_time_vs_prblmSize = fopen("./generated_data/log_non_opemp_time_vs_prblmSize.txt", "w");
+	log_non_openmp_time_vs_prblmSize = fopen("./generated_data/log_non_opemp_time_vs_prblmSize.txt", "w");
 	log_openmp_prblmSize_vs_time = fopen("./generated_data/log_openmp_time_prlm_sz.txt", "w");
 	log_openmp_time_vs_threads = fopen("./generated_data/log_openmp_time_vs_threads.txt", "w");
 	log_openmp_speedup_vs_threads = fopen("./generated_data/log_openmp_speedup_vs_threads.txt", "w");
@@ -115,8 +115,8 @@ int main(int argc, char **argv)
 	printf("Non OpenMP: Problem size = %d :\n",n);
 	seq_time_result = print_flops(flops, seq_time);
 	printf("---------------------------------\n");
-	fprintf(log_non_opemp_time_vs_prblmSize, "%d %e\n", n, seq_time_result); //x: problem size, y: time
-	fclose(log_non_opemp_time_vs_prblmSize);
+	fprintf(log_non_openmp_time_vs_prblmSize, "%d %e\n", n, seq_time_result); //x: problem size, y: time
+	fclose(log_non_openmp_time_vs_prblmSize);
 	/* matrix multiplication with Non-OpenMP ends here */
 
 
