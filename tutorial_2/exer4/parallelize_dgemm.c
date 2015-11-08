@@ -172,13 +172,13 @@ int main(int argc, char **argv)
 	fprintf(log_openmp_time_vs_threads, "%d %g\n", num_thread, para_time_result); //x: num_thread, y: time
 
 	fprintf(log_openmp_speedup_vs_threads, "%d %g\n", num_thread, speedup); //x: num_thread, y: speedup
-	fprintf(log_ideal_speedup, "%d %d\n", num_thread, num_thread); //x: num_thread, y: ideal speedup
+	fprintf(log_ideal_speedup, "%d %d\n", num_thread, num_thread); //x: num_thread, y: ideal speedup=no of processing units
 
 	fprintf(log_openmp_eff_vs_threads, "%d %g\n", num_thread, eff); //x: num_thread, y: effieciency
 	fprintf(log_ideal_eff, "%d %d\n", num_thread, 1); //x: num_thread, y: ideal effieciency
 
-	fprintf(log_openmp_eff_vs_prblm_size, "%d %g\n", num_thread, speedup); //x: problem size, y: effieciency
-	fprintf(log_openmp_speedup_vs_prblm_size, "%d %g\n", num_thread, eff); //x: problem size, y: speedup
+	fprintf(log_openmp_eff_vs_prblm_size, "%d %g\n", n, eff); //x: problem size, y: effieciency
+	fprintf(log_openmp_speedup_vs_prblm_size, "%d %g\n", n, speedup); //x: problem size, y: speedup
 
 
 
