@@ -13,22 +13,26 @@ import numpy as np
 
 file1_data = np.loadtxt('./generated_data/log_non_opemp_time_vs_prblmSize.txt')
 file2_data = np.loadtxt('./generated_data/log_openmp_time_prlm_sz.txt')
+file3_data = np.loadtxt('./generated_data/log_openmp_eff_vs_prblm_sz.txt')
+file4_data = np.loadtxt('./generated_data/log_openmp_speedup_vs_prblm_sz.txt')
 
 # plot the first column as x, and second column as y
 # use pylab to plot x and y as red circles
 # third parameter in plot is color, change it according to your need
 #p1 = pyp.plot(file1_data[:,0], file1_data[:,1], 'ro')
-p1 = pyp.plot(file1_data[:,0], file1_data[:,1], 'r')
-p2 = pyp.plot(file2_data[:,0], file2_data[:,1], 'g')
+p1 = pyp.plot(file1_data[:,0], file1_data[:,1], 'c')
+p2 = pyp.plot(file2_data[:,0], file2_data[:,1], 'b')
+p3 = pyp.plot(file3_data[:,0], file3_data[:,1], 'g')
+p4 = pyp.plot(file4_data[:,0], file4_data[:,1], 'r')
         
 pylab.title('OpenMP vs Non OpenMP matrix (num threads fixed)')
 pylab.xlabel('Matrix input size N(n*n)*(n*n)')
-pylab.ylabel('Computation Time(second)')
+#pylab.ylabel('Computation Time(second)')
 
 pylab.grid(True)
 
 #let python select the best position for legend
-pyp.legend([p1[0],p2[0]], ['No OpenMP','OpenMP'], 'best', numpoints=1)
+pyp.legend([p1[0],p2[0],p3[0],p4[0]], ['No OpenMP(Time)','OpenMP(Time)', 'Efficiency', 'Speedup'], 'best', numpoints=1)
 
 pyp.savefig("./generated_plots/Seq_VS_Para.png")
 
