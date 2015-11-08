@@ -41,15 +41,20 @@ int main(int argc, char **argv)
 	int num_thread = 0;
 
 	//char logfile_name[1000];
-	FILE *log_non_opemp_time_vs_prblmSize,
-	     *log_openmp_prblmSize_vs_time, 
-	     *log_openmp_time_vs_threads,
-	     *log_openmp_speedup_vs_threads,
-	     *log_openmp_eff_vs_threads;
+	FILE *log_non_opemp_time_vs_prblmSize,    /* for non-OpenMP : Problem size vs time */
+	     *log_openmp_prblmSize_vs_time,       /* for OpenMP : Problem size vs time */
+	     *log_openmp_time_vs_threads,         /* for OpenMP: time vs num of threads */
+	     *log_openmp_speedup_vs_threads,      /* for OpenMP: speedup vs number of threads */
+	     *log_openmp_eff_vs_threads,          /* for OpenMP: Efficiency vs num of threads */ 
+	     *log_ideal_speedup,                  /* for OpenMP: ideal speedup */
+	     *log_ideal_eff,                      /* for OpenMP: ideal efficiency */
+	     *log_openmp_eff_vs_prblm_size,       /* for OpenMP: eff vs problem size */
+	     *log_openmp_speedup_vs_prblm_size;   /* for OpenMP: speedup vs problem size */
 
-	n = 500;
+	n = 500; /* problem size */
 	double flops;
 
+	/* Default values if nothing is given by command prompt */
 	if(argc > 1){
 		n = atoi(argv[1]);
 	}
@@ -57,13 +62,24 @@ int main(int argc, char **argv)
 		block_size = atoi(argv[2]);
 	}
 
-	//sprintf(logfile_name, "logfile_dgemm.txt");
-	log_non_opemp_time_vs_prblmSize = fopen("./log_non_opemp_time_vs_prblmSize.txt", "a+"); //for non-OpenMP : Problem size vs time
-	log_openmp_prblmSize_vs_time = fopen("./log_openmp_time_prlm_sz.txt", "a+"); //for weak OpenMP : Problem size vs time
-	log_openmp_time_vs_threads = fopen("./log_openmp_time_vs_threads.txt", "a+"); //for weak OpenMP: time vs num of threads
-	log_openmp_speedup_vs_threads = fopen("./log_openmp_speedup_vs_threads.txt", "a+"); //for weak OpenMP: speedup vs num of threads
-	log_openmp_eff_vs_threads = fopen("./log_openmp_eff_vs_threads.txt", "a+"); //for weak OpenMP: speedup vs num of threads
 
+
+	//sprintf(logfile_name, "logfile_dgemm.txt");
+	
+	/* Opening file descriptors */
+	log_non_opemp_time_vs_prblmSize = fopen("./generated_data/log_non_opemp_time_vs_prblmSize.txt", "w");
+	log_openmp_prblmSize_vs_time = fopen("./generated_data/log_openmp_time_prlm_sz.txt", "w");
+	log_openmp_time_vs_threads = fopen("./generated_data/log_openmp_time_vs_threads.txt", "w");
+	log_openmp_speedup_vs_threads = fopen("./generated_data/log_openmp_speedup_vs_threads.txt", "w");
+	log_openmp_eff_vs_threads = fopen("./generated_data/log_openmp_eff_vs_threads.txt", "w");
+	log_ideal_speedup = fopen("./generated_data/log_openmp_ideal_speedup.txt", "w");
+	log_ideal_eff = fopen("./generated_data/log_openmp_ideal_eff.txt", "w");
+	log_openmp_eff_vs_prblm_size = fopen("./generated_data/log_openmp_eff_vs_prblm_sz.txt", "w");
+	log_openmp_speedup_vs_prblm_size = fopen("./generated_data/log_openmp_speedup_vs_prblm_sz.txt", "w");
+
+
+
+	/* Dynamic memory allocation */
 	mem_size = n * n * sizeof(double);
 	a = (double*)malloc(mem_size);
 	b = (double*)malloc(mem_size);
@@ -106,10 +122,8 @@ int main(int argc, char **argv)
 
 
 	/* Parallelizing matrix multiplication with OpenMP where each cache-block is handled by only one thread starts here*/
-	printf("OpenMP: Problem size = %d, cache block size = %d, number of threads = %d\n",n, block_size, num_thread);
 	memset(c, 0, mem_size);
 	time_marker_t time = get_time();
-	//#pragma omp parallel for schedule(dynamic) default(none) shared(block_size, n, a, b, c) private(i, j, k, ii, jj, kk)
 	#pragma omp parallel default(none) shared(block_size, n, a, b, c) private(i, j, k, ii, jj, kk) reduction(+:num_thread)
 	{
 		num_thread += 1;
@@ -136,9 +150,11 @@ int main(int argc, char **argv)
 
 	flops = 2.0 * n * n * n;
 
+	printf("OpenMP: Problem size = %d, cache block size = %d, number of threads = %d\n",n, block_size, num_thread);
 	
 	para_time_result = print_flops(flops, time);
 	/* matrix multiplication with OpenMP ends here */
+
 
 
 
@@ -148,16 +164,36 @@ int main(int argc, char **argv)
 	printf("speedup = %e, efficiency = %e\n",speedup, eff);
 	printf("---------------------------------\n");
 
-	/* writing the results in txt files that will be used for plot generation */
+
+
+
+	/* writing the results of parallelizaed calculations in txt files that will be used for plot generation */
 	fprintf(log_openmp_prblmSize_vs_time, "%d %e\n", n, para_time_result); //x: problem size, y: time
 	fprintf(log_openmp_time_vs_threads, "%d %e\n", num_thread, para_time_result); //x: num_thread, y: time
-	fprintf(log_openmp_speedup_vs_threads, "%d %e\n", num_thread, speedup); //x: num_thread, y: speedup
-	fprintf(log_openmp_eff_vs_threads, "%d %e\n", num_thread, eff); //x: num_thread, y: effieciency
 
+	fprintf(log_openmp_speedup_vs_threads, "%d %e\n", num_thread, speedup); //x: num_thread, y: speedup
+	fprintf(log_ideal_speedup, "%d %d\n", num_thread, num_thread); //x: num_thread, y: ideal speedup
+
+	fprintf(log_openmp_eff_vs_threads, "%d %e\n", num_thread, eff); //x: num_thread, y: effieciency
+	fprintf(log_ideal_eff, "%d %d\n", num_thread, 1); //x: num_thread, y: ideal effieciency
+
+	fprintf(log_openmp_eff_vs_prblm_size, "%d %e\n", num_thread, speedup); //x: problem size, y: effieciency
+	fprintf(log_openmp_speedup_vs_prblm_size, "%d %e\n", num_thread, eff); //x: problem size, y: speedup
+
+
+
+
+	/* closing file descriptors */
 	fclose(log_openmp_prblmSize_vs_time);
 	fclose(log_openmp_time_vs_threads);
 	fclose(log_openmp_speedup_vs_threads);
 	fclose(log_openmp_eff_vs_threads);
+	fclose(log_ideal_speedup);
+	fclose(log_ideal_eff);
+	fclose(log_openmp_eff_vs_prblm_size);
+	fclose(log_openmp_speedup_vs_prblm_size);
+
+
 
 	return(0);
 }

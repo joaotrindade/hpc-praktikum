@@ -22,3 +22,4 @@ clean:
 	rm -rf *.out
 	rm -rf *.txt
 	rm -rf *.png
+	rm -rf ./generated_data/*
