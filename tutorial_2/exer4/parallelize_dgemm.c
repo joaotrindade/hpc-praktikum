@@ -115,7 +115,7 @@ int main(int argc, char **argv)
 	printf("Non OpenMP: Problem size = %d :\n",n);
 	seq_time_result = print_flops(flops, seq_time);
 	printf("---------------------------------\n");
-	fprintf(log_non_openmp_time_vs_prblmSize, "%d %e\n", n, seq_time_result); //x: problem size, y: time
+	fprintf(log_non_openmp_time_vs_prblmSize, "%d %g\n", n, seq_time_result); //x: problem size, y: time
 	fclose(log_non_openmp_time_vs_prblmSize);
 	/* matrix multiplication with Non-OpenMP ends here */
 
@@ -168,17 +168,17 @@ int main(int argc, char **argv)
 
 
 	/* writing the results of parallelizaed calculations in txt files that will be used for plot generation */
-	fprintf(log_openmp_prblmSize_vs_time, "%d %e\n", n, para_time_result); //x: problem size, y: time
-	fprintf(log_openmp_time_vs_threads, "%d %e\n", num_thread, para_time_result); //x: num_thread, y: time
+	fprintf(log_openmp_prblmSize_vs_time, "%d %g\n", n, para_time_result); //x: problem size, y: time
+	fprintf(log_openmp_time_vs_threads, "%d %g\n", num_thread, para_time_result); //x: num_thread, y: time
 
-	fprintf(log_openmp_speedup_vs_threads, "%d %e\n", num_thread, speedup); //x: num_thread, y: speedup
+	fprintf(log_openmp_speedup_vs_threads, "%d %g\n", num_thread, speedup); //x: num_thread, y: speedup
 	fprintf(log_ideal_speedup, "%d %d\n", num_thread, num_thread); //x: num_thread, y: ideal speedup
 
-	fprintf(log_openmp_eff_vs_threads, "%d %e\n", num_thread, eff); //x: num_thread, y: effieciency
+	fprintf(log_openmp_eff_vs_threads, "%d %g\n", num_thread, eff); //x: num_thread, y: effieciency
 	fprintf(log_ideal_eff, "%d %d\n", num_thread, 1); //x: num_thread, y: ideal effieciency
 
-	fprintf(log_openmp_eff_vs_prblm_size, "%d %e\n", num_thread, speedup); //x: problem size, y: effieciency
-	fprintf(log_openmp_speedup_vs_prblm_size, "%d %e\n", num_thread, eff); //x: problem size, y: speedup
+	fprintf(log_openmp_eff_vs_prblm_size, "%d %g\n", num_thread, speedup); //x: problem size, y: effieciency
+	fprintf(log_openmp_speedup_vs_prblm_size, "%d %g\n", num_thread, eff); //x: problem size, y: speedup
 
 
 

@@ -21,9 +21,9 @@ file2_data = np.loadtxt('./generated_data/log_openmp_time_prlm_sz.txt')
 p1 = pyp.plot(file1_data[:,0], file1_data[:,1], 'r')
 p2 = pyp.plot(file2_data[:,0], file2_data[:,1], 'g')
         
-pylab.title('OpenMP vs Non OpenMP matrix computational time')
+pylab.title('OpenMP vs Non OpenMP matrix (num threads fixed)')
 pylab.xlabel('Matrix input size N(n*n)*(n*n)')
-pylab.ylabel('Time(second)')
+pylab.ylabel('Computation Time(second)')
 
 pylab.grid(True)
 
