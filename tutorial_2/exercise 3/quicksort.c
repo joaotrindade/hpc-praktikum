@@ -8,6 +8,8 @@
 #include <string.h>
 #include <omp.h>
 
+#define THRESHOLD 10000
+
 void print_list(double *data, int length){
 	int i;
 	for(i = 0; i < length; i++)
@@ -43,10 +45,10 @@ void quicksort(double *data, int length){
 	}
 
 
-	#pragma omp task final(right < 10000)
+	#pragma omp task final(right < THRESHOLD)
 	quicksort(data, right);
 	
-	#pragma omp task final((length - left) < 10000)
+	#pragma omp task final((length - left) < THRESHOLD)
 	quicksort(&(data[left]), length - left);
 }
 
