@@ -7,7 +7,7 @@ gcc -g -O0 -fopenmp -c -o parallelize_dgemm.o parallelize_dgemm.c
 gcc -g -fopenmp -o parallelize.out parallelize_dgemm.o timer.o
 
 
-prblm_size=800
+prblm_size=700
 block_size=16
 num_th=2
 

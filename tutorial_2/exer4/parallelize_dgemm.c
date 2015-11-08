@@ -67,15 +67,15 @@ int main(int argc, char **argv)
 	//sprintf(logfile_name, "logfile_dgemm.txt");
 	
 	/* Opening file descriptors */
-	log_non_openmp_time_vs_prblmSize = fopen("./generated_data/log_non_opemp_time_vs_prblmSize.txt", "w");
-	log_openmp_prblmSize_vs_time = fopen("./generated_data/log_openmp_time_prlm_sz.txt", "w");
-	log_openmp_time_vs_threads = fopen("./generated_data/log_openmp_time_vs_threads.txt", "w");
-	log_openmp_speedup_vs_threads = fopen("./generated_data/log_openmp_speedup_vs_threads.txt", "w");
-	log_openmp_eff_vs_threads = fopen("./generated_data/log_openmp_eff_vs_threads.txt", "w");
-	log_ideal_speedup = fopen("./generated_data/log_openmp_ideal_speedup.txt", "w");
-	log_ideal_eff = fopen("./generated_data/log_openmp_ideal_eff.txt", "w");
-	log_openmp_eff_vs_prblm_size = fopen("./generated_data/log_openmp_eff_vs_prblm_sz.txt", "w");
-	log_openmp_speedup_vs_prblm_size = fopen("./generated_data/log_openmp_speedup_vs_prblm_sz.txt", "w");
+	log_non_openmp_time_vs_prblmSize = fopen("./generated_data/log_non_opemp_time_vs_prblmSize.txt", "a+");
+	log_openmp_prblmSize_vs_time = fopen("./generated_data/log_openmp_time_prlm_sz.txt", "a+");
+	log_openmp_time_vs_threads = fopen("./generated_data/log_openmp_time_vs_threads.txt", "a+");
+	log_openmp_speedup_vs_threads = fopen("./generated_data/log_openmp_speedup_vs_threads.txt", "a+");
+	log_openmp_eff_vs_threads = fopen("./generated_data/log_openmp_eff_vs_threads.txt", "a+");
+	log_ideal_speedup = fopen("./generated_data/log_openmp_ideal_speedup.txt", "a+");
+	log_ideal_eff = fopen("./generated_data/log_openmp_ideal_eff.txt", "a+");
+	log_openmp_eff_vs_prblm_size = fopen("./generated_data/log_openmp_eff_vs_prblm_sz.txt", "a+");
+	log_openmp_speedup_vs_prblm_size = fopen("./generated_data/log_openmp_speedup_vs_prblm_sz.txt", "a+");
 
 
 

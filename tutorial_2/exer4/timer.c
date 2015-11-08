@@ -37,9 +37,9 @@ double get_ticks_diff_time(time_marker_t time) {
 }
 
 double print_flops(int flop, time_marker_t time) {
-	//double val =  (double) flop / get_ToD_diff_time(time);
-	double val =  (double) flop / get_ticks_diff_time(time);
+	//double eplapsed_time =  get_ticks_diff_time(time);
+	double eplapsed_time =  get_ToD_diff_time(time);
 	printf("FLOPS with clock(): %e \n", (double) flop / get_ticks_diff_time(time));
-	printf("FLOPS with timeofday(): %e \n", val);
-	return val;
+	printf("FLOPS with timeofday(): %e \n", (double) flop / get_ToD_diff_time(time));
+	return eplapsed_time;
 }
