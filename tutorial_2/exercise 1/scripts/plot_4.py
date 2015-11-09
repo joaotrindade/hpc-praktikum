@@ -4,7 +4,7 @@ import pylab
 import numpy as np
 
 #sh strong/weak.sh
-# for reduction
+# for critical
 #Plot between x : Number of threads, y: computatinal time and efficiency and speedup , ideal speedup, ideal eff(scaling)
 # Use numpy to load the data contained in the file
 # file1.txt into a 2-D array called data
@@ -13,11 +13,11 @@ import numpy as np
 # 4 5
 # Note: remove the newline from last line of txt files
 
-file1_data = np.loadtxt('./generated_data/log_r_eff_vs_threads.txt')
-file2_data = np.loadtxt('./generated_data/log_r_time_vs_threads.txt')
-file3_data = np.loadtxt('./generated_data/log_r_speedup_vs_threads.txt')
+file1_data = np.loadtxt('./generated_data/log_c_eff_vs_threads.txt')
+file2_data = np.loadtxt('./generated_data/log_c_time_vs_threads.txt')
+file3_data = np.loadtxt('./generated_data/log_c_speedup_vs_threads.txt')
 #file4_data = np.loadtxt('./generated_data/log_openmp_ideal_speedup.txt')
-file5_data = np.loadtxt('./generated_data/log_r_ideal_eff.txt')
+file5_data = np.loadtxt('./generated_data/log_c_ideal_eff.txt')
 
 # plot the first column as x, and second column as y
 # use pylab to plot x and y as red circles
@@ -28,7 +28,7 @@ p3 = pyp.plot(file3_data[:,0], file3_data[:,1], 'b')
 #p4 = pyp.plot(file4_data[:,0], file4_data[:,1], 'y')
 p5 = pyp.plot(file5_data[:,0], file5_data[:,1], 'm')
         
-pylab.title('Scaling')
+pylab.title('Weak Scaling')
 pylab.xlabel('Number of threads')
 #pylab.ylabel('Computational Time(second)')
 

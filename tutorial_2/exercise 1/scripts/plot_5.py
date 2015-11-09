@@ -28,7 +28,7 @@ p3 = pyp.plot(file3_data[:,0], file3_data[:,1], 'b')
 #p4 = pyp.plot(file4_data[:,0], file4_data[:,1], 'y')
 p5 = pyp.plot(file5_data[:,0], file5_data[:,1], 'm')
         
-pylab.title('Scaling')
+pylab.title('Weak Scaling')
 pylab.xlabel('Number of threads')
 #pylab.ylabel('Computational Time(second)')
 
@@ -38,7 +38,7 @@ pylab.grid(True)
 #pyp.legend([p1[0],p2[0],p3[0],p4[0],p5[0]], ['Efficiency', 'Computation time(sec)', 'Speedup','Ideal speedup', 'Ideal Efficiency'], 'best', numpoints=1)
 pyp.legend([p1[0],p2[0],p3[0],p5[0]], ['Efficiency', 'Computation time(sec)', 'Speedup', 'Ideal Efficiency'], 'best', numpoints=1)
 
-pyp.savefig("./generated_plots/scaling_time_eff_speedup_VS_threads.png")
+pyp.savefig("./generated_plots/strong_red.png")
 
 # show the plot on the screen
 pylab.show()

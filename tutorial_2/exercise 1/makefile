@@ -1,19 +1,23 @@
-all: serial openmp_critical openmp_reduction
+exe: driver.o openmp_reduction.o openmp_critical.o serial.o timer.o
+	g++ -fopenmp -o exe driver.o openmp_reduction.o openmp_critical.o serial.o timer.o
 
-openmp_reduction: openmp_reduction.cpp
-	g++ -fopenmp openmp_reduction.cpp timer.cpp -o openmp_reduction.out
+driver.o: driver.cpp timer.o
+	g++ -fopenmp -c -o driver.o driver.cpp
 
-openmp_critical: openmp_critical.cpp
-	g++ -fopenmp openmp_critical.cpp timer.cpp -o openmp_critical.out
+openmp_reduction.o: openmp_reduction.cpp timer.o
+	g++ -fopenmp -c -o openmp_reduction.o openmp_reduction.cpp
 
-serial: serial.cpp
-	g++ serial.cpp timer.cpp -o serial.out
+openmp_critical.o: openmp_critical.cpp timer.o
+	g++ -fopenmp -c -o openmp_critical.o openmp_critical.cpp
 
-timer.o: timer.cpp timer.h
-	g++ -fopenmp -c -o timer.o timer.c
+serial.o: serial.cpp timer.o
+	g++ -fopenmp -c -o serial.o serial.cpp
+
+timer.o: timer.cpp
+	g++ -fopenmp -c -o timer.o timer.cpp
 
 clean:
 	rm -rf *.o
-	rm -rf *.out
+	rm -rf ./exe
 	rm -rf ./generated_data/*.txt
 	rm -rf *.txt

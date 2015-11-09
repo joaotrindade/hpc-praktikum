@@ -54,4 +54,36 @@ double get_ticks_diff_time(time_marker_t time);
  */
 void print_flops(int flop, time_marker_t time);
 
+typedef struct	
+{	
+		FILE *log_non_openmp_time_vs_prblmSize;   /* for non-OpenMP : div vs time */
+
+
+		FILE *log_r_prblmSize_vs_time;       /* for Reduction OpenMP : div vs time */
+		FILE *log_r_time_vs_threads;         /* for Reduction OpenMP: time vs num of threads */
+		FILE *log_r_speedup_vs_threads;      /* for Reduction OpenMP: speedup vs number of threads */
+		FILE *log_r_eff_vs_threads;          /* for Reduction OpenMP: Efficiency vs num of threads */ 
+		FILE *log_r_ideal_speedup;           /* for ReductionOpenMP: ideal speedup vs threads*/
+		FILE *log_r_ideal_eff;               /* for Reduction OpenMP: ideal efficiency vs threads */
+		FILE *log_r_eff_vs_prblm_size;       /* for Reduction OpenMP: eff vs div */
+		FILE *log_r_speedup_vs_prblm_size;   /* for Reduction OpenMP: speedup vs div */
+
+
+		FILE *log_c_prblmSize_vs_time;       /* for Critical OpenMP : div vs time */
+		FILE *log_c_time_vs_threads;         /* for critical OpenMP: time vs num of threads */
+		FILE *log_c_speedup_vs_threads;      /* for critical OpenMP: speedup vs number of threads */
+		FILE *log_c_eff_vs_threads;          /* for critical OpenMP: Efficiency vs num of threads */ 
+		FILE *log_c_ideal_speedup;           /* for critical OpenMP: ideal speedup vs threads*/
+		FILE *log_c_ideal_eff;               /* for critical OpenMP: ideal efficiency vs threads */
+		FILE *log_c_eff_vs_prblm_size;       /* for critical OpenMP: eff vs div */
+		FILE *log_c_speedup_vs_prblm_size;   /* for critical OpenMP: speedup vs div */
+}file_ptrs;
+
+/**
+ * PI calculation functions
+ */
+void serial(int num_th, int n, file_ptrs *ptr);
+void openmp_critical(int num_th, int n, double seq_time_result, file_ptrs *ptr);
+void openmp_reduction(int num_th, int n, double seq_time_result, file_ptrs *ptr);
+
 #endif /* TIMER_H */
