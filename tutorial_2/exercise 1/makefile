@@ -1,19 +1,19 @@
 all: serial openmp_critical openmp_reduction
 
 openmp_reduction: openmp_reduction.cpp
-	g++-4.9 -fopenmp openmp_reduction.cpp timer.cpp -o openmp_reduction.out
+	g++ -fopenmp openmp_reduction.cpp timer.cpp -o openmp_reduction.out
 
 openmp_critical: openmp_critical.cpp
-	g++-4.9 -fopenmp openmp_critical.cpp timer.cpp -o openmp_critical.out
+	g++ -fopenmp openmp_critical.cpp timer.cpp -o openmp_critical.out
 
 serial: serial.cpp
 	g++ serial.cpp timer.cpp -o serial.out
 
 timer.o: timer.cpp timer.h
-	icc timer.cpp -c
+	g++ -fopenmp -c -o timer.o timer.c
 
 clean:
 	rm -rf *.o
-	rm -rf cachegrind.out.*
-	rm -rf cg.out
-	rm -rf matrix
+	rm -rf *.out
+	rm -rf ./generated_data/*.txt
+	rm -rf *.txt

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+gcc -g -O0 -fopenmp -c -o timer.o timer.c
+gcc -g -O0 -fopenmp -c -o dgemm.o sequential_dgemm.c
+gcc -g -fopenmp -o sequential.out dgemm.o timer.o
+gcc -g -O0 -fopenmp -c -o parallelize_dgemm.o parallelize_dgemm.c
+gcc -g -fopenmp -o parallelize.out parallelize_dgemm.o timer.o
+
+
+prblm_size=700
+block_size=16
+num_th=2
+
+while [ "$num_th" -lt 500 ]
+do
+   export OMP_NUM_THREADS=$num_th
+   ./parallelize.out $prblm_size $block_size
+   num_th=`expr $num_th "*" 2 `
+done
