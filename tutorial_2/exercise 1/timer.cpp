@@ -29,7 +29,7 @@ double get_ToD_diff_time(time_marker_t time) {
 
 double get_ticks_diff_time(time_marker_t time) {
 	clock_t tmp = clock();
-	return ((tmp - time.ticks) / (double)CLOCKS_PER_SEC);
+	return ((double)(tmp - time.ticks) / (double)CLOCKS_PER_SEC);
 }
 
 void print_flops(int flop, time_marker_t time) {

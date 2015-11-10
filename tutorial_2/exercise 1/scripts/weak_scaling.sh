@@ -1,8 +1,8 @@
 #!/bin/bash
 
-div=10
-num_th=2
-while [ "$div" -lt 15000 ]
+div=1000000
+num_th=1
+while [ "$num_th" -lt 35 ]
 do
    export OMP_NUM_THREADS=$num_th
    ./exe $num_th $div

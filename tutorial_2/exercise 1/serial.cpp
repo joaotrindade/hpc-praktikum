@@ -28,9 +28,9 @@ void serial(
 
 	pi = area * 4 / n;
 	printf("Time elapsed. time: %g  ticks: %g\n", get_ToD_diff_time(time), get_ticks_diff_time(time));
-	seq_time_result = get_ticks_diff_time(time);	
+	seq_time_result = get_ToD_diff_time(time);	
 	cout << setprecision(18) << "PI = " << pi << endl;
-	fprintf(ptr->log_non_openmp_time_vs_prblmSize, "%d %g\n", n, seq_time_result); //x: problem size, y: time
+	fprintf(ptr->log_non_openmp_time_vs_prblmSize, "%d %e\n", n, seq_time_result); //x: problem size, y: time
 	fclose(ptr->log_non_openmp_time_vs_prblmSize);
 
 

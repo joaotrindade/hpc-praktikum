@@ -1,11 +1,11 @@
 #!/bin/bash
 
-export OMP_NUM_THREADS=16
+export OMP_NUM_THREADS=22
 
-div=50
-num_th=32
+div=100000
+num_th=22
 
-while [ "$div" -lt 10500 ]
+while [ "$div" -lt 4000000 ]
 do
    ./exe $num_th $div
    div=`expr $div "*" 2`

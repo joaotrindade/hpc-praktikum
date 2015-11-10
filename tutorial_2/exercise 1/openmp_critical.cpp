@@ -39,24 +39,25 @@ void openmp_critical(
 
 
 	/* calculation for parallelizaed measurements */
-	para_time_result = get_ticks_diff_time(time);	
+	//para_time_result = get_ticks_diff_time(time);	
+	para_time_result = get_ToD_diff_time(time);	
 	speedup = seq_time_result / para_time_result;
 	eff = speedup / (double)num_thread;
 	printf("speedup = %g, efficiency = %g\n",speedup, eff);
 
 
 	/* writing the results of parallelizaed calculations in txt files that will be used for plot generation */
-	fprintf(ptr->log_c_prblmSize_vs_time, "%d %g\n", n, para_time_result); //x: division, y: time
-	fprintf(ptr->log_c_time_vs_threads, "%d %g\n", num_thread, para_time_result); //x: num_thread, y: time
+	fprintf(ptr->log_c_prblmSize_vs_time, "%d %e\n", n, para_time_result); //x: division, y: time
+	fprintf(ptr->log_c_time_vs_threads, "%d %e\n", num_thread, para_time_result); //x: num_thread, y: time
 
-	fprintf(ptr->log_c_speedup_vs_threads, "%d %g\n", num_thread, speedup); //x: num_thread, y: speedup
+	fprintf(ptr->log_c_speedup_vs_threads, "%d %e\n", num_thread, speedup); //x: num_thread, y: speedup
 	fprintf(ptr->log_c_ideal_speedup, "%d %d\n", num_thread, num_thread); //x: num_thread, y: ideal speedup=no of processing units
 
-	fprintf(ptr->log_c_eff_vs_threads, "%d %g\n", num_thread, eff); //x: num_thread, y: effieciency
+	fprintf(ptr->log_c_eff_vs_threads, "%d %e\n", num_thread, eff); //x: num_thread, y: effieciency
 	fprintf(ptr->log_c_ideal_eff, "%d %d\n", num_thread, 1); //x: num_thread, y: ideal effieciency
 
-	fprintf(ptr->log_c_eff_vs_prblm_size, "%d %g\n", n, eff); //x: division, y: effieciency
-	fprintf(ptr->log_c_speedup_vs_prblm_size, "%d %g\n", n, speedup); //x: division, y: speedup
+	fprintf(ptr->log_c_eff_vs_prblm_size, "%d %e\n", n, eff); //x: division, y: effieciency
+	fprintf(ptr->log_c_speedup_vs_prblm_size, "%d %e\n", n, speedup); //x: division, y: speedup
 
 	cout << "OpenMP critical ends here\n";
 	cout << "---------------------------\n";
