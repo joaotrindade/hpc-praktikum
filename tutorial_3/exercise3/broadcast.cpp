@@ -22,6 +22,26 @@ void trivial_send(double *array) {
 	}
 }
 
+void tree(double *array, int start_index, int final_index) {
+	if (start_index == final_index) return;
+	int middle_index = (start_index + final_index + 1)/2
+	
+	if (rank == start_index){
+		MPI_Send(array, ARRAY_SIZE, MPI_DOUBLE, middle_index,TREE_TAG,MPI_COMM_WORLD);
+	}
+	else if (rank == middle_index) {
+		MPI_Recv(array,ARRAY_SIZE,MPI_DOUBLE,start_index,TREE_TAG,MPI_COMM_WORLD, &status);
+	}
+	
+	tree(array,start_index,middle_index-1);
+	tree(array,middle_index,final_index);
+}
+
+void call_tree(double *array)
+{
+	tree(array, 0, ARRAY_SIZE-1);
+}
+
 
 int main(int argc, char **argv) {
 
