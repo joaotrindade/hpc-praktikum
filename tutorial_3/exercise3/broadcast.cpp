@@ -24,12 +24,12 @@ void trivial_send(double *array) {
 
 void tree(double *array, int start_index, int final_index) {
 	if (start_index == final_index) return;
-	int middle_index = (start_index + final_index + 1)/2
+	int middle_index = (start_index + final_index + 1)/2;
 	
-	if (rank == start_index){
+	if (mpi_rank == start_index){
 		MPI_Send(array, ARRAY_SIZE, MPI_DOUBLE, middle_index,TREE_TAG,MPI_COMM_WORLD);
 	}
-	else if (rank == middle_index) {
+	else if (mpi_rank == middle_index) {
 		MPI_Recv(array,ARRAY_SIZE,MPI_DOUBLE,start_index,TREE_TAG,MPI_COMM_WORLD, &status);
 	}
 	
@@ -37,7 +37,7 @@ void tree(double *array, int start_index, int final_index) {
 	tree(array,middle_index,final_index);
 }
 
-void call_tree(double *array)
+void tree_send(double *array)
 {
 	tree(array, 0, ARRAY_SIZE-1);
 }
@@ -76,6 +76,14 @@ int main(int argc, char **argv) {
 	else {
 		cout << "rank: " << mpi_rank << " name: " << processor_name  << endl;	
 	}*/
+	
+	if (mpi_rank==0) start_time = MPI_Wtime();
+	trivial_send(array);
+	
+	if (mpi_rank==0) {
+		end_time = MPI_Wtime();
+		printf("Size of dataset: %d, elapsed time[s] %e \n", ARRAY_SIZE, end_time-start_time);
+	}
 	
 	if (mpi_rank==0) start_time = MPI_Wtime();
 	trivial_send(array);
