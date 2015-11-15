@@ -82,7 +82,7 @@ int main(int argc, char **argv) {
 	
 	if (mpi_rank==0) {
 		end_time = MPI_Wtime();
-		printf("Size of dataset: %d, elapsed time[s] %e \n", ARRAY_SIZE, end_time-start_time);
+		printf("[TRIVIAL]Dataset: %d, P= %d,elapsed time[s] %e \n", ARRAY_SIZE,comm_size,end_time-start_time);
 	}
 	
 	if (mpi_rank==0) start_time = MPI_Wtime();
@@ -90,7 +90,7 @@ int main(int argc, char **argv) {
 	
 	if (mpi_rank==0) {
 		end_time = MPI_Wtime();
-		printf("Size of dataset: %d, elapsed time[s] %e \n", ARRAY_SIZE, end_time-start_time);
+		printf("[TREE]   Dataset: %d, P= %d,elapsed time[s] %e \n", ARRAY_SIZE,comm_size,end_time-start_time);
 	}
 	
 	MPI_Finalize();
