@@ -14,7 +14,7 @@ MPI_Status status;
 
 void trivial_send(double *array) {
 	if (mpi_rank == 0) {
-		for (int i = 1; i < comm_size; i++) {
+		for (long i = 1; i < comm_size; i++) {
 			MPI_Send(array, ARRAY_SIZE, MPI_DOUBLE, i,TRIVIAL_TAG,MPI_COMM_WORLD);
 		}
 	} else {
@@ -22,9 +22,9 @@ void trivial_send(double *array) {
 	}
 }
 
-void tree(double *array, int start_index, int final_index) {
+void tree(double *array, long start_index, long final_index) {
 	if (start_index == final_index) return;
-	int middle_index = (start_index + final_index + 1)/2;
+	long middle_index = (start_index + final_index + 1)/2;
 	
 	if (mpi_rank == start_index){
 		MPI_Send(array, ARRAY_SIZE, MPI_DOUBLE, middle_index,TREE_TAG,MPI_COMM_WORLD);
@@ -39,7 +39,7 @@ void tree(double *array, int start_index, int final_index) {
 
 void tree_send(double *array)
 {
-	tree(array, 0, ARRAY_SIZE-1);
+	tree(array, 0, comm_size-1);
 }
 
 
@@ -77,20 +77,34 @@ int main(int argc, char **argv) {
 		cout << "rank: " << mpi_rank << " name: " << processor_name  << endl;	
 	}*/
 	
+	/** TEST TRIVIAL SEND **/
+	MPI_Barrier(MPI_COMM_WORLD);
 	if (mpi_rank==0) start_time = MPI_Wtime();
 	trivial_send(array);
-	
+	MPI_Barrier(MPI_COMM_WORLD);
 	if (mpi_rank==0) {
 		end_time = MPI_Wtime();
 		printf("[TRIVIAL]Dataset: %d, P= %d,elapsed time[s] %e \n", ARRAY_SIZE,comm_size,end_time-start_time);
 	}
 	
+	/** TEST TREE SEND **/
+	MPI_Barrier(MPI_COMM_WORLD);
 	if (mpi_rank==0) start_time = MPI_Wtime();
-	trivial_send(array);
-	
+	tree_send(array);
+	MPI_Barrier(MPI_COMM_WORLD);
 	if (mpi_rank==0) {
 		end_time = MPI_Wtime();
 		printf("[TREE]   Dataset: %d, P= %d,elapsed time[s] %e \n", ARRAY_SIZE,comm_size,end_time-start_time);
+	}
+	
+	/** TEST MPI_BCAST SEND **/
+	MPI_Barrier(MPI_COMM_WORLD);
+	if (mpi_rank==0) start_time = MPI_Wtime();
+	MPI_Bcast(array,ARRAY_SIZE,MPI_DOUBLE,0,MPI_COMM_WORLD);
+	MPI_Barrier(MPI_COMM_WORLD);
+	if (mpi_rank==0) {
+		end_time = MPI_Wtime();
+		printf("[MPI_BCAST]   Dataset: %d, P= %d,elapsed time[s] %e \n", ARRAY_SIZE,comm_size,end_time-start_time);
 	}
 	
 	MPI_Finalize();
