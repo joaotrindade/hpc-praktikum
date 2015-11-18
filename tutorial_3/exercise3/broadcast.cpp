@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
 	MPI_Barrier(MPI_COMM_WORLD);
 	if (mpi_rank==0) {
 		end_time = MPI_Wtime();
-		printf("[TRIVIAL]Dataset: %d, P= %d,elapsed time[s] %e \n", ARRAY_SIZE,comm_size,end_time-start_time);
+		printf("[TRIVIAL]     Dataset: %d, P= %d,elapsed time[s] %e \n", ARRAY_SIZE,comm_size,end_time-start_time);
 	}
 	
 	/** TEST TREE SEND **/
@@ -94,7 +94,7 @@ int main(int argc, char **argv) {
 	MPI_Barrier(MPI_COMM_WORLD);
 	if (mpi_rank==0) {
 		end_time = MPI_Wtime();
-		printf("[TREE]   Dataset: %d, P= %d,elapsed time[s] %e \n", ARRAY_SIZE,comm_size,end_time-start_time);
+		printf("[TREE]        Dataset: %d, P= %d,elapsed time[s] %e \n", ARRAY_SIZE,comm_size,end_time-start_time);
 	}
 	
 	/** TEST MPI_BCAST SEND **/
