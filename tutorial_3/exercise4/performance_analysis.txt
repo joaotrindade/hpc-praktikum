@@ -1,0 +1,84 @@
+
+serial time for ngrid_points_per_dimension=1250:
+10.8138
+
+grid_points_per_dimension=1250:
+2 X 2 : 2.08041
+3 X 3 : 1.08491
+5 X 2 : 1.31699
+4 X 3 : 0.923175
+2 X 7 : 0.737327
+4 X 4 : 1.35432
+9 X 2 : 0.950716
+10 X 2 : 0.697037
+11 X 2 : 0.634856
+
+serial time for ngrid_points_per_dimension=500:
+1.0218
+
+grid_points_per_dimension=500:
+2 X 2 : 0.269639
+3 X 3 : 0.150514
+5 X 2 : 0.15392
+4 X 3 : 0.128367
+2 X 7 : 0.138368
+4 X 4 : 0.103592
+9 X 2 : 0.097883
+10 X 2 : 0.088817
+11 X 2 : 0.07933
+
+serial time for ngrid_points_per_dimension=200:
+0.097837
+
+grid_points_per_dimension=200:
+2 X 2 : 0.028072
+3 X 3 : 0.014862
+5 X 2 : 0.013849
+4 X 3 : 0.013209
+2 X 7 : 0.011167
+4 X 4 : 0.010358
+9 X 2 : 0.01226
+10 X 2 : 0.011582
+11 X 2 : 0.010139
+
+serial time for ngrid_points_per_dimension=100:
+0.011949
+
+grid_points_per_dimension=100:
+2 X 2 : 0.004584
+3 X 3 : 0.003527
+5 X 2 : 0.003698
+4 X 3 : 0.003816
+2 X 7 : 0.003759
+4 X 4 : 0.003494
+9 X 2 : 0.004716
+10 X 2 : 0.00475
+11 X 2 : 0.004056
+
+serial time for ngrid_points_per_dimension=50:
+0.001392
+
+grid_points_per_dimension=50:
+2 X 2 : 0.00215
+3 X 3 : 0.00161
+5 X 2 : 0.001589
+4 X 3 : 0.00189
+2 X 7 : 0.001678
+4 X 4 : 0.002414
+9 X 2 : 0.002392
+10 X 2 : 0.002484
+11 X 2 : 0.002123
+
+serial time for ngrid_points_per_dimension=10:
+0.000157
+
+grid_points_per_dimension=10:
+2 X 2 : 0.00043
+3 X 3 : 0.000519
+5 X 2 : 0.000433
+4 X 3 : 0.000508
+2 X 7 : 0.000425
+4 X 4 : 0.000467
+9 X 2 : 8.6e-05
+10 X 2 : 9.7e-05
+11 X 2 : 9.3e-05

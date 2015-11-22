@@ -13,6 +13,9 @@
 #include <sys/time.h>
 #include <mpi.h>
 
+///to store performance results
+std::ofstream myfile;
+
 size_t cg_max_iterations;
 double cg_eps;
 
@@ -661,10 +664,9 @@ bool checkAndReadArguments(int argc, char* argv[])
 	{
 	    std::cout << std::endl;
 	    std::cout << "usage: " << std::endl;
-	    std::cout << "mpirun -np <num_of_processes> ./app <grid_points_per_dimension> <cg_max_iterations> <cg_eps> <topology_x> <topology_y>" << std::endl;
+	    std::cout << "mpirun -np <num_of_processes> ./mpi_app <grid_points_per_dimension> <cg_max_iterations> <cg_eps> <topology_x> <topology_y>" << std::endl;
 	    std::cout << "make sure that: " << std::endl;
 	    std::cout << " - <num_of_processes> == <topology_x> * <topology_y>" << std::endl;
-	    std::cout << " - <grid_points_per_dimension>-2 is dividable by <topology_x> and <topology_y> without remainder" << std::endl;
 	    std::cout << std::endl;
 	    std::cout << "example:" << std::endl;
 	    std::cout << "mpirun -np 16 ./app 9 100 0.0001 4 4 " << std::endl;
@@ -688,17 +690,6 @@ bool checkAndReadArguments(int argc, char* argv[])
 	{
 	    std::cout << "<num_of_processes> != <topology_x> * <topology_y>" << std::endl;
 	    std::cout << size << " != " << topology_size_x << " * " << topology_size_y << std::endl;
-	}
-
-	return false;
-    }
-	
-    if((grid_points_1d-2) % topology_size_x != 0 || (grid_points_1d-2) % topology_size_y != 0)
-    {
-        if(rank == 0)
-	{
-	    std::cout << " <grid_points_per_dimension>-2 is not dividable by <topology_x> and <topology_y> without remainder" 
-		      << std::endl;
 	}
 
 	return false;
@@ -731,11 +722,11 @@ void setupMPIStuff()
     gridpoints_subgrid_y = (grid_points_1d - 2)/topology_size_y + 2;
 	
 	
-// 	std::cout << "grid_points_1d: " << grid_points_1d << std::endl;
-// 	std::cout << "topology_size_x: " << topology_size_x << std::endl;
-// 	std::cout << "topology_size_y: " << topology_size_y << std::endl;
-// 	std::cout << "gridpoints_subgrid_x: " << gridpoints_subgrid_x << std::endl;
-// 	std::cout << "gridpoints_subgrid_y: " << gridpoints_subgrid_y << std::endl;
+    //std::cout << "grid_points_1d: " << grid_points_1d << std::endl;
+    //std::cout << "topology_size_x: " << topology_size_x << std::endl;
+    //std::cout << "topology_size_y: " << topology_size_y << std::endl;
+    //std::cout << "gridpoints_subgrid_x: " << gridpoints_subgrid_x << std::endl;
+    //std::cout << "gridpoints_subgrid_y: " << gridpoints_subgrid_y << std::endl;
 	
     //create new MPI types
     MPI_Type_vector(gridpoints_subgrid_x - 2, 1, 1,                    MPI_DOUBLE, &row_type);
@@ -812,6 +803,10 @@ int main(int argc, char* argv[])
     if(rank == 0)
     {
         std::cout << std::endl << "Parallel Needed time: " << time << " s" << std::endl << std::endl;
+        //std::cerr << topology_size_x << " X " << topology_size_y << " : " << time << std::endl;
+        myfile.open ("performance_analysis.txt", std::ios::app);
+        myfile << topology_size_x << " X " << topology_size_y << " : " << time << std::endl;
+        myfile.close();
     }
 	
     _mm_free(grid);

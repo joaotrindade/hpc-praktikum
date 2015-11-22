@@ -11,3 +11,5 @@ clean:
 	rm -rf mpi_app
 	rm -rf *.gnuplot
 	rm -rf a.out
+	rm -rf performance_analysis.txt
+	touch performance_analysis.txt

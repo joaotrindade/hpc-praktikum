@@ -12,6 +12,9 @@
 #include <fstream>
 #include <sys/time.h>
 
+///to store performance results
+std::ofstream myfile;
+
 /// store number of grid points in one dimension
 std::size_t grid_points_1d = 0;
 
@@ -328,7 +331,7 @@ std::size_t solve(double* grid, double* b, std::size_t cg_max_iterations, double
 		
 		residuum = delta_new;
 		needed_iters++;
-		//std::cout << "(iter: " << needed_iters << ")delta: " << delta_new << std::endl;
+		std::cout << "(iter: " << needed_iters << ")delta: " << delta_new << std::endl;
 	}
 
 	std::cout << "Number of iterations: " << needed_iters << " (max. " << cg_max_iterations << ")" << std::endl;
@@ -388,6 +391,11 @@ int main(int argc, char* argv[])
 	store_grid(grid, "serial_solution.gnuplot");
 	
 	std::cout << std::endl << "Serial Needed time: " << time << " s" << std::endl << std::endl;
+        //std::cerr << time << std::endl;
+
+        myfile.open ("performance_analysis.txt", std::ios::app);
+        myfile << time << "\n";
+        myfile.close();
 	
 	_mm_free(grid);
 	_mm_free(b);
