@@ -328,7 +328,7 @@ std::size_t solve(double* grid, double* b, std::size_t cg_max_iterations, double
 		
 		residuum = delta_new;
 		needed_iters++;
-		std::cout << "(iter: " << needed_iters << ")delta: " << delta_new << std::endl;
+		//std::cout << "(iter: " << needed_iters << ")delta: " << delta_new << std::endl;
 	}
 
 	std::cout << "Number of iterations: " << needed_iters << " (max. " << cg_max_iterations << ")" << std::endl;
