@@ -1,5 +1,5 @@
 #!/bin/bash
-#source /etc/profile.d/modules.sh
+source /etc/profile.d/modules.sh
 #cd $HOME/hpc-praktikum/tutorial_3/exercise3
 #salloc --ntasks=40
 ./serial_app 10 100 0.0001
