@@ -1,10 +1,10 @@
 all: clean broadcast
 
-broadcast: broadcast.cpp
-	mpiicc broadcast.cpp -o broadcast.o
+broadcast: mpi_poisson.cpp
+	mpicc mpi_poisson.cpp -o mpi_app
 
 clean:
 	rm -rf *.o
 	rm -rf cachegrind.out.*
 	rm -rf cg.out
-	rm -rf matrix
+	rm -rf mpi_app

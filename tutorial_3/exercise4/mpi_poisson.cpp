@@ -11,14 +11,10 @@
 #include <iostream>
 #include <fstream>
 #include <sys/time.h>
+#include <mpi.h>
 
 /// store number of grid points in one dimension
 std::size_t grid_points_1d = 0;
-
-/// store begin timestep
-struct timeval begin;
-/// store end timestep
-struct timeval end;
 
 ///global variables for MPI
 int rank; /* rank of process */
@@ -57,9 +53,6 @@ int my_coords[2];
 
 size_t cg_max_iterations;
 double cg_eps;
-
-/// store number of grid points in one dimension
-std::size_t grid_points_1d = 0;
 
 /// store begin timestep
 double begin;
