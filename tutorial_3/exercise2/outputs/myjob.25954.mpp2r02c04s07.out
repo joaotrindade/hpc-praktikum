@@ -1,0 +1,74 @@
+/var/slurmd-mpp2/job25954/slurm_script: line 16: cd: /gpfs/scratch/t1221/t1221ag/mydata: No such file or directory
+ benchmarks to run pingpong 
+#------------------------------------------------------------
+#    Intel (R) MPI Benchmarks 4.1, MPI-1 part    
+#------------------------------------------------------------
+# Date                  : Fri Nov 20 01:51:31 2015
+# Machine               : x86_64
+# System                : Linux
+# Release               : 3.0.101-0.46-default
+# Version               : #1 SMP Wed Dec 17 11:04:10 UTC 2014 (8356111)
+# MPI Version           : 3.0
+# MPI Thread Environment: 
+
+# New default behavior from Version 3.2 on:
+
+# the number of iterations per message size is cut down 
+# dynamically when a certain run time (per message size sample) 
+# is expected to be exceeded. Time limit is defined by variable 
+# "SECS_PER_SAMPLE" (=> IMB_settings.h) 
+# or through the flag => -time 
+  
+
+
+# Calling sequence was: 
+
+# /home/hpc/t1221/t1221ag/Tutorial3/exercise2/imb/src/IMB-MPI1 pingpong
+
+# Minimum message length in bytes:   0
+# Maximum message length in bytes:   4194304
+#
+# MPI_Datatype                   :   MPI_BYTE 
+# MPI_Datatype for reductions    :   MPI_FLOAT
+# MPI_Op                         :   MPI_SUM  
+#
+#
+
+# List of Benchmarks to run:
+
+# PingPong
+
+#---------------------------------------------------
+# Benchmarking PingPong 
+# #processes = 2 
+# ( 278 additional processes waiting in MPI_Barrier)
+#---------------------------------------------------
+       #bytes #repetitions      t[usec]   Mbytes/sec
+            0         1000         0.29         0.00
+            1         1000         0.32         2.95
+            2         1000         0.32         5.89
+            4         1000         0.32        11.99
+            8         1000         0.34        22.21
+           16         1000         0.33        46.31
+           32         1000         0.36        84.66
+           64         1000         0.38       161.26
+          128         1000         0.39       312.20
+          256         1000         0.43       571.11
+          512         1000         0.52       933.45
+         1024         1000         0.60      1625.07
+         2048         1000         0.86      2259.24
+         4096         1000         1.22      3206.89
+         8192         1000         2.08      3753.28
+        16384         1000         3.68      4247.04
+        32768         1000         6.49      4818.03
+        65536          640         9.45      6611.58
+       131072          320        17.74      7047.77
+       262144          160        33.24      7521.56
+       524288           80        56.78      8805.55
+      1048576           40       104.98      9526.01
+      2097152           20       199.05     10047.74
+      4194304           10       402.50      9937.93
+
+
+# All processes entering MPI_Finalize
+
