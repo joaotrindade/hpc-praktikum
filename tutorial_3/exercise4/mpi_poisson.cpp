@@ -10,6 +10,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <sys/time.h>
 #include <mpi.h>
 
 size_t cg_max_iterations;
@@ -52,8 +53,10 @@ int my_coords[2];
 // number of grid points in one dimension
 std::size_t grid_points_1d = 0;
 
-// start timestamp in seconds
-double start;
+/// store begin timestep
+struct timeval begin;
+/// store end timestep
+struct timeval end;
 
 // initilizing MPI send and receive request objects stored in request_arr array
 void initialize_req()
@@ -62,12 +65,13 @@ void initialize_req()
       request_arr[i] = MPI_REQUEST_NULL;
 }
 
+
 /**
  * initialize and start timer
  */
 void timer_start()
 {
-	start = MPI_Wtime();
+	gettimeofday(&begin,(struct timezone *)0);
 }
 
 /**
@@ -77,11 +81,32 @@ void timer_start()
  */
 double timer_stop()
 {
-	double end = MPI_Wtime();
-	double elapsed_seconds = end - start;
+	gettimeofday(&end,(struct timezone *)0);
+	double seconds, useconds;
+	double ret, tmp;
 
-	return elapsed_seconds;
+	if (end.tv_usec >= begin.tv_usec)
+	{
+		seconds = (double)end.tv_sec - (double)begin.tv_sec;
+		useconds = (double)end.tv_usec - (double)begin.tv_usec;
+	}
+	else
+	{
+		seconds = (double)end.tv_sec - (double)begin.tv_sec;
+		seconds -= 1;					// Correction
+		useconds = (double)end.tv_usec - (double)begin.tv_usec;
+		useconds += 1000000;			// Correction
+	}
+
+	// get time in seconds
+	tmp = (double)useconds;
+	ret = (double)seconds;
+	tmp /= 1000000;
+	ret += tmp;
+
+	return ret;
 }
+
 
 /**
  * stores a given grid into a file
@@ -763,9 +788,9 @@ int main(int argc, char* argv[])
     double* b = (double*)_mm_malloc(gridpoints_subgrid_x*gridpoints_subgrid_y*sizeof(double), 64);
     init_grid(grid);
 
-    //store_grid(grid, "initial_condition_parallel.gnuplot");
+    store_grid(grid, "initial_condition_parallel.gnuplot");
     init_b(b);
-    //store_grid(b, "b.gnuplot");
+    store_grid(b, "b.gnuplot");
 	
     // solve Poisson equation using CG method
     MPI_Barrier(cartesian_grid);
