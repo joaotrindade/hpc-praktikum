@@ -1,7 +1,7 @@
 all: clean broadcast
 
 broadcast: broadcast.cpp
-	mpicc broadcast.cpp -o broadcast.o
+	mpiicc broadcast.cpp -o broadcast.o
 
 clean:
 	rm -rf *.o
