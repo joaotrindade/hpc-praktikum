@@ -753,8 +753,8 @@ int main(int argc, char* argv[])
 	exit(-1);
     }
 
-    setupMPIStuff();
     initialize_req();
+    setupMPIStuff();
     initNeighbours();
 	
 
