@@ -1,7 +1,8 @@
 all: clean broadcast
 
 broadcast: mpi_poisson.cpp
-	mpicc mpi_poisson.cpp -o mpi_app
+#	mpicc mpi_poisson.cpp -o mpi_app
+	mpicc poisson_parallel.cpp -o mpi_app
 
 clean:
 	rm -rf *.o
