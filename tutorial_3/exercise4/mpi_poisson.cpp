@@ -611,7 +611,7 @@ bool checkAndReadArguments(int argc, char* argv[]){
 
 	
 	// read cli arguments
-	grid_points_1d = atoi(argv[1]);
+	grid_points_1d = atof(argv[1]);
 	cg_max_iterations = atoi(argv[2]);
 	cg_eps = atof(argv[3]);
 	topology_size_x = atoi(argv[4]);
@@ -735,7 +735,7 @@ int main(int argc, char* argv[])
 	}
  	store_grid(grid, "solution_parallel.gnuplot");
 	if(rank == 0){
-		std::cout << std::endl << "Needed time: " << time << " s" << std::endl << std::endl;
+		std::cout << std::endl << "Parallel Needed time: " << time << " s" << std::endl << std::endl;
 	}
 	
 	_mm_free(grid);

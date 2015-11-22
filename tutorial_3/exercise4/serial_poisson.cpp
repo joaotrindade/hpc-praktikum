@@ -352,7 +352,8 @@ int main(int argc, char* argv[])
 	if (argc != 4)
 	{
 		std::cout << std::endl;
-		std::cout << "meshwidth" << std::endl;
+		//std::cout << "meshwidth" << std::endl;
+		std::cout << "number of grids in one dimension" << std::endl;
 		std::cout << "cg_max_iterations" << std::endl;
 		std::cout << "cg_eps" << std::endl;
 		std::cout << std::endl;
@@ -364,28 +365,29 @@ int main(int argc, char* argv[])
 	}
 	
 	// read cli arguments
-	double mesh_width = atof(argv[1]);
+	//double mesh_width = atof(argv[1]);
+        grid_points_1d = atoi(argv[1]);
 	size_t cg_max_iterations = atoi(argv[2]);
 	double cg_eps = atof(argv[3]);
 
 	// calculate grid points per dimension
-	grid_points_1d = (std::size_t)(1.0/mesh_width)+1;
+	//grid_points_1d = (std::size_t)(1.0/mesh_width)+1;
 	
 	// initialize the gird and rights hand side
 	double* grid = (double*)_mm_malloc(grid_points_1d*grid_points_1d*sizeof(double), 64);
 	double* b = (double*)_mm_malloc(grid_points_1d*grid_points_1d*sizeof(double), 64);
 	init_grid(grid);
-	store_grid(grid, "initial_condition.gnuplot");
+	store_grid(grid, "serial_initial_condition.gnuplot");
 	init_b(b);
-	store_grid(b, "b.gnuplot");
+	store_grid(b, "serial_b.gnuplot");
 	
 	// solve Poisson equation using CG method
 	timer_start();
 	solve(grid, b, cg_max_iterations, cg_eps);
 	double time = timer_stop();
-	store_grid(grid, "solution.gnuplot");
+	store_grid(grid, "serial_solution.gnuplot");
 	
-	std::cout << std::endl << "Needed time: " << time << " s" << std::endl << std::endl;
+	std::cout << std::endl << "Serial Needed time: " << time << " s" << std::endl << std::endl;
 	
 	_mm_free(grid);
 	_mm_free(b);
