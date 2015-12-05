@@ -118,7 +118,7 @@ int main(int argc, char **argv)
 	flops = 2.0 * n * n * n;
        	double time = timer_stop();
 
-	std::cout << std::endl << "Serial Needed time: " << time << " s" << std::endl << std::endl;
+	printf("\nSerial Needed time: %g seconds\n\n",time);
 
 	return(0);
 }
