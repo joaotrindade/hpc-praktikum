@@ -15,6 +15,7 @@ struct timeval begin;
 struct timeval end;
 
 ///matrix variables
+int mem_size; /* total memory bytes occupied by a matrix*/
 int n = 500; /* dim of matrix */
 double *a, *b, *c;  /* c = a * b */
 
@@ -114,8 +115,6 @@ void naive_matrix_multiplication_algo()
 
 int main(int argc, char **argv)
 {
-
-	int mem_size;
 
 	/*char logfile_name[100];
 	FILE *logfile_handle;*/
