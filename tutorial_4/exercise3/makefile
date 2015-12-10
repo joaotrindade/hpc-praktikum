@@ -1,6 +1,6 @@
-all: clean broadcast
+all: clean poisson
 
-broadcast: mpi_poisson.cpp
+poisson: mpi_poisson.cpp
 	mpiicc mpi_poisson.cpp -o mpi_app
 	icc serial_poisson.cpp -o serial_app
 
