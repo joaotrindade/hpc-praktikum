@@ -13,3 +13,4 @@ clean:
 	rm -rf a.out
 	rm -rf performance_analysis.txt
 	touch performance_analysis.txt
+	rm -rf compare_result.txt

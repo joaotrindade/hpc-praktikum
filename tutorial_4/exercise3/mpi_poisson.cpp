@@ -15,6 +15,7 @@
 
 ///to store performance results
 std::ofstream myfile;
+std::ofstream result_file;
 
 size_t cg_max_iterations;
 double cg_eps;
@@ -253,7 +254,7 @@ void store_grid(double* grid, std::string filename)
  */
 double eval_init_func(double x, double y)
 {
-    return ((x-0.3)*(x-0.3))*(y*y);
+    return (x*x)*(y*y);
 }
 
 /**
@@ -503,7 +504,10 @@ void solve(double* grid, double* b, std::size_t cg_max_iterations, double cg_eps
 {
     if(rank == 0)
     {
-        std::cout << "Starting Conjugated Gradients: (max iterations: " <<cg_max_iterations << ", cg_eps: " 
+        result_file.open ("compare_result.txt", std::ios::app);
+        result_file << std::endl << "**********MPI POISSON*************"; 
+
+        std::cout << std::endl << "Starting Conjugated Gradients: (max iterations: " <<cg_max_iterations << ", cg_eps: " 
 		  << cg_eps << ", gridsize1d: " << grid_points_1d << ")" << std::endl;
     }
 	
@@ -542,6 +546,9 @@ void solve(double* grid, double* b, std::size_t cg_max_iterations, double cg_eps
     {
         std::cout << "Starting norm of residuum: " << (delta_0/eps_squared) << std::endl;
 	std::cout << "Target norm:               " << (delta_0) << std::endl;
+
+	result_file << "\n" << "Starting norm of residuum: " << (delta_0/eps_squared) << std::endl;
+	result_file << "Target norm:               " << (delta_0) << std::endl;
     }
 		
     while ((needed_iters < cg_max_iterations) && (delta_new > delta_0))
@@ -586,6 +593,10 @@ void solve(double* grid, double* b, std::size_t cg_max_iterations, double cg_eps
     {
         std::cout << "Number of iterations: " << needed_iters << " (max. " << cg_max_iterations << ")" << std::endl;
 	std::cout << "Final norm of residuum: " << delta_new << std::endl;
+
+	result_file << "Number of iterations: " << needed_iters << " (max. " << cg_max_iterations << ")" << std::endl;
+	result_file << "Final norm of residuum: " << delta_new << std::endl;
+        result_file.close();
     }
 
     _mm_free(d);
@@ -713,7 +724,7 @@ void setupMPIStuff()
     int periods[2];
     periods[0] = 0;
     periods[1] = 0;
-    MPI_Cart_create(MPI_COMM_WORLD, 2, dims, periods, 1, &cartesian_grid);
+    MPI_Cart_create(MPI_COMM_WORLD, 2, dims, periods, 1, &cartesian_grid); //reordering enable
 	
     MPI_Comm_rank(cartesian_grid, &rank);
     MPI_Cart_coords(cartesian_grid, rank, 2, my_coords);	

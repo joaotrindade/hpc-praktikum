@@ -14,6 +14,7 @@
 
 ///to store performance results
 std::ofstream myfile;
+std::ofstream result_file;
 
 /// store number of grid points in one dimension
 std::size_t grid_points_1d = 0;
@@ -260,7 +261,9 @@ void g_product_operator(double* grid, double* result)
  */
 std::size_t solve(double* grid, double* b, std::size_t cg_max_iterations, double cg_eps)
 {
-	std::cout << "Starting Conjugated Gradients" << std::endl;
+        result_file.open ("compare_result.txt", std::ios::app);
+        result_file << "\n" << "**********SERIAL POISSON*************" << std::endl; 
+	std::cout << "\n" << "Starting Conjugated Gradients" << std::endl;
 
 	double eps_squared = cg_eps*cg_eps;
 	std::size_t needed_iters = 0;
@@ -295,6 +298,9 @@ std::size_t solve(double* grid, double* b, std::size_t cg_max_iterations, double
 	
 	std::cout << "Starting norm of residuum: " << (delta_0/eps_squared) << std::endl;
 	std::cout << "Target norm:               " << (delta_0) << std::endl;
+
+	result_file << "Starting norm of residuum: " << (delta_0/eps_squared) << std::endl;
+	result_file << "Target norm:               " << (delta_0) << std::endl;
 
 	while ((needed_iters < cg_max_iterations) && (delta_new > delta_0))
 	{
@@ -336,6 +342,10 @@ std::size_t solve(double* grid, double* b, std::size_t cg_max_iterations, double
 
 	std::cout << "Number of iterations: " << needed_iters << " (max. " << cg_max_iterations << ")" << std::endl;
 	std::cout << "Final norm of residuum: " << delta_new << std::endl;
+
+	result_file << "Number of iterations: " << needed_iters << " (max. " << cg_max_iterations << ")" << std::endl;
+	result_file << "Final norm of residuum: " << delta_new << std::endl;
+        result_file.close();
 	
 	_mm_free(d);
 	_mm_free(q);
