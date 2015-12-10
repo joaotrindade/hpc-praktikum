@@ -1,8 +1,7 @@
-all: clean broadcast
+all: clean poisson
 
-broadcast: mpi_poisson.cpp
-	mpiicc mpi_poisson.cpp -o mpi_app
-	icc serial_poisson.cpp -o serial_app
+poisson: mpi_poisson.cpp
+	scalasca -instrument --mpp=mpi mpiicc mpi_poisson.cpp -o mpi_app
 
 clean:
 	rm -rf *.o

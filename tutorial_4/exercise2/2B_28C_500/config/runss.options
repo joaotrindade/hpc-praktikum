@@ -1,0 +1,14 @@
+-r
+/home/hpc/t1221/t1221ag/Tutorial4/exercise2/r001hs
+--data-limit-mb=500
+--stack-stitching
+--follow-child
+--type=frame:counters
+--stackwalk=offline
+--type=cpu:counters
+--type=cpu:stack
+--interval=10
+--
+/home/hpc/t1221/t1221ag/Tutorial2/Exercise3/quicksort.out
+100
+28
