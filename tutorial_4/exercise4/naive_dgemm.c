@@ -109,7 +109,7 @@ void naive_matrix_multiplication_algo()
        	time = timer_stop();
 
 	flops = 2.0 * n * n * n;
-	printf("\nSerial Needed time: %g seconds\n\n",time);
+	printf("Serial Needed time(n = %d): %g seconds\n",n, time);
 
 }
 

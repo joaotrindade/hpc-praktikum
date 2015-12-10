@@ -85,22 +85,24 @@ void initialize_matrices()
 }
                               
 /*
- * Function Name     : naive_matrix_multiplication_algo
- * Algorithm Analysis: The program steps sequentially through the memory elements of matrix 'a' 
- *                     but steps across the columns of matrix 'b', resulting in a large physical 
- *                     stride through memory, causes inefficient use of the L1 data cache and costly data TLB misses 
+ * Function Name     : optimized_matrix_multiplication_algo
+ * Algorithm Analysis: The index variables j and k change the most frequently and the access pattern through 
+ *                     the two operand matrices is sequential using a small physical stride (4 bytes.) 
+ *                     These changes improve access to memory data via the data cache. Data TLB behavior is improved, too, 
+ *                     since long strides are eliminated.
  */
 
-void naive_matrix_multiplication_algo()
+void optimized_matrix_multiplication_algo()
 {
         int i, j, k;
 	double flops, time;
 
 	timer_start();
 
+	// Loop nest interchange algorithm
 	for(i = 0; i < n; i++){
-		for(j = 0; j < n; j++){
-			for(k = 0; k < n; k++){
+		for(k = 0; k < n; k++){
+			for(j = 0; j < n; j++){
 				c[i * n + j] += a[i * n + k] * b[k * n + j];
 			}
 		}
@@ -109,7 +111,7 @@ void naive_matrix_multiplication_algo()
        	time = timer_stop();
 
 	flops = 2.0 * n * n * n;
-	printf("\nSerial Needed time: %g seconds\n\n",time);
+	printf("Optimized Needed time(n = %d): %g seconds\n",n, time);
 
 }
 
@@ -141,7 +143,7 @@ int main(int argc, char **argv)
 
 
 	/* naive matrix multiplication */  
-        naive_matrix_multiplication_algo();
+        optimized_matrix_multiplication_algo();
 
 
 	return(0);
