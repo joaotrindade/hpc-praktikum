@@ -1,8 +1,0 @@
-
-serial time for ngrid_points_per_dimension=1250:
-24.2038
-
-grid_points_per_dimension=1250:
-5 X 4 : 0.778791
-9 X 9 : 1.63165
-17 X 17 : 2.44493
