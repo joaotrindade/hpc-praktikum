@@ -1,5 +1,5 @@
 /** 
- * matrix matrix multiplication pattern for practical course
+ * optimised matrix matrix multiplication using loop nest interchange algo for practical course
  **/
 
 

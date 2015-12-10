@@ -1,5 +1,5 @@
 /** 
- * matrix matrix multiplication pattern for practical course
+ * naive matrix matrix multiplication pattern for practical course
  **/
 
 
