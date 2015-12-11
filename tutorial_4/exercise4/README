@@ -4,28 +4,21 @@
  $ sh run.sh
  $ perf stat -e cache-misses,L1-dcache-load-misses,LLC-load-misses,dTLB-load-misses  ./naive_app $prblm_size
  $ perf stat -e cache-misses,L1-dcache-load-misses,LLC-load-misses,dTLB-load-misses  ./optimized_app $prblm_size
+ $ valgrind --tool=cachegrind ./optimized_app $prblm_size
+ $ perf stat -e instructions,cache-misses,branch-misses,page-faults,cpu-migrations,stalled-cycles-frontend,stalled-cycles-backend,L1-dcache-load-misses,L1-dcache-prefetch-misses,LLC-prefetch-misses,dTLB-load-misses,branch-load-misses ./openmp_app $prblm_size $block_size
 
 
 ***** for automation script run following commands *****
  $ make
  $ sh run.sh
  $ sh collect_data.sh
+ $ sh collect_data_for_openmp_strong_scaling.sh   #for strong scaling of openmp code
+ $ sh collect_data_for_openmp_weak_scaling.sh     #for weak scaling of openmp code
 
 
 *******************************************************************************************************
-NOTE 1: Generated performance analysis will be stored in performance_analysis.txt in current directory.
-NOTE 2: Result that we had generated while testing on cluster has been processed in arranged way in 
+NOTE :  Result that we had generated while testing on cluster has been processed in arranged way in 
         COLLECTED_DATA_AND_GRAPH.pdf in current directory
 
-NOTE 3: Generated files:
-	* b.gnuplot
-	* initial_condition_parallel.gnuplot
-	* mpi_app
-	* performance_analysis.txt
-	* serial_app
-	* serial_b.gnuplot
-	* serial_initial_condition.gnuplot
-	* serial_solution.gnuplot
-	* solution_parallel.gnuplot
 *******************************************************************************************************
 
