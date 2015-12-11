@@ -1,0 +1,33 @@
+~~~~~~~~~~~~~~~~~
+README
+Mantosh Kumar
+~~~~~~~~~~~~~~~~~
+$ make
+gauss.c -> original gauss implementation
+gauss-vecto.c -> gauss with vectorisation
+lu-factorization -> LU-Factorization experiment
+
+
+
+***** Execute folliwng commands to build and run the application manually *****
+ $ make
+ $ sh run.sh
+ $ perf stat -e cache-misses,L1-dcache-load-misses,LLC-load-misses,dTLB-load-misses  ./naive_app $prblm_size
+ $ perf stat -e cache-misses,L1-dcache-load-misses,LLC-load-misses,dTLB-load-misses  ./optimized_app $prblm_size
+ $ valgrind --tool=cachegrind ./optimized_app $prblm_size
+ $ perf stat -e instructions,cache-misses,branch-misses,page-faults,cpu-migrations,stalled-cycles-frontend,stalled-cycles-backend,L1-dcache-load-misses,L1-dcache-prefetch-misses,LLC-prefetch-misses,dTLB-load-misses,branch-load-misses ./openmp_app $prblm_size $block_size
+
+
+***** for automation script run following commands *****
+ $ make
+ $ sh run.sh
+ $ sh collect_data.sh
+ $ sh collect_data_for_openmp_strong_scaling.sh   #for strong scaling of openmp code
+ $ sh collect_data_for_openmp_weak_scaling.sh     #for weak scaling of openmp code
+
+
+*******************************************************************************************************
+NOTE :  Result that we had generated while testing on cluster has been processed in arranged way in 
+        COLLECTED_DATA_AND_GRAPH.pdf in current directory
+
+
