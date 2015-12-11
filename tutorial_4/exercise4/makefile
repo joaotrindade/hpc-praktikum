@@ -15,7 +15,4 @@ openmp: timer.c timer.h openmp_dgemm.c
 clean:
 	rm -rf *.o
 	rm -rf cachegrind.out.*
-	rm -rf cg.out
-	rm -rf *.out
 	rm -rf *.txt
-	rm -rf *.png
