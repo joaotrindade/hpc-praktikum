@@ -2,7 +2,7 @@
 
 prblm_size=1000
 block_size=16
-num_th=2
+num_th=4
 while [ "$num_th" -lt 35 ]
 do
    export OMP_NUM_THREADS=$num_th
