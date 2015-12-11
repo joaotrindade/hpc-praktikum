@@ -102,8 +102,9 @@ int main(int argc, char **argv)
 	flops = 2.0 * n * n * n;
 
 	para_time_result = print_flops(flops, time);
-	printf("OpenMP: Problem size = %d, cache block size = %d, num_threads = %d, time=%g\n",
+	printf("\nOpenMP: Problem size = %d, cache block size = %d, num_threads = %d, time=%g\n",
                                          n, block_size, num_thread, para_time_result);
+	printf("****************************************************************************************\n");
 
 	/* matrix multiplication with OpenMP ends here */
 
