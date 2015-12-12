@@ -5,8 +5,14 @@
  * date: 2002-09-25
  * =================================================== */
 
-#define NGLS 32768
-//#define NGLS 300000000 //total number of systems of equations
+//#define NGLS 32768
+
+//total number of systems of equations (this is max both compiler can handle), exceed this compiler relocation will fail
+#define NGLS   1000000 
+
+//a hack to increase the number of system of equations: so real_total_num_of_sys_eq = NGLS*REPEAT
+#define REPEAT 300
+
 
 #define NUM_LOOPS 4 
 
@@ -44,19 +50,26 @@ int main() {
 	int i, j;
 	int n=3;
 
+        int m;
+        double total_elapsed_time = 0;
+
 	time_marker_t time;
 
-	for (i = 0; i < NGLS; i++) {
-		init(a[i], b[i], x[i]);
-	}
+        for(m = 0; m < REPEAT; m++) {
+		for (i = 0; i < NGLS; i++) {
+			init(a[i], b[i], x[i]);
+		}
 
-	time = get_time();
-	for (i = 0; i < NGLS; i++) {
-		gauss_elimination(a[i], b[i], x[i]);
-                //print_vector("solution :", x[i]);
-	}
+		time = get_time();
+		for (i = 0; i < NGLS; i++) {
+			gauss_elimination(a[i], b[i], x[i]);
+	                //print_vector("solution :", x[i]);
+		}
+		
+		total_elapsed_time += get_ToD_diff_time(time);
+        }
 
-	printf("NAIV: Time elapsed. time: %f   ticks: %f\n", get_ToD_diff_time(time), get_ticks_diff_time(time));
+	printf("NAIV: Time elapsed. time: %g\n", total_elapsed_time);
 	return(0);
 }
 
