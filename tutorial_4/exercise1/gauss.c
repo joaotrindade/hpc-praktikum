@@ -5,10 +5,10 @@
  * date: 2002-09-25
  * =================================================== */
 
-//#define NGLS 32768
-#define NGLS 32800
+#define NGLS 32768
+//#define NGLS 300000000 //total number of systems of equations
 
-#define NUM_LOOPS 4
+#define NUM_LOOPS 4 
 
 #include <stdio.h>
 #include <math.h>
@@ -53,6 +53,7 @@ int main() {
 	time = get_time();
 	for (i = 0; i < NGLS; i++) {
 		gauss_elimination(a[i], b[i], x[i]);
+                //print_vector("solution :", x[i]);
 	}
 
 	printf("NAIV: Time elapsed. time: %f   ticks: %f\n", get_ToD_diff_time(time), get_ticks_diff_time(time));
@@ -85,6 +86,7 @@ void gauss_elimination(double a[3][3], double b[3], double x[3]) {
 	int n = 3;
 	int i,j,k;
 
+        /* converting to echelon form */
 	for (i = 0; i < n; i++) {
 
 		for (j = i+1; j < n; j++) {
@@ -102,6 +104,7 @@ void gauss_elimination(double a[3][3], double b[3], double x[3]) {
 	}
 
 
+        /* back-substituting */
 	for (i = n-1; i >= 0; i--) {
 		x[i] = b[i];
 		for(j = i+1; j < n; j++) {
@@ -109,6 +112,7 @@ void gauss_elimination(double a[3][3], double b[3], double x[3]) {
 		}
 	}
 }
+
 
 void print_matrix(char* name, double matrix[3][3]) {
 	int i, j;

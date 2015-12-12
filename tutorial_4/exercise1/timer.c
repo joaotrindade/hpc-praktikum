@@ -29,10 +29,10 @@ double get_ToD_diff_time(time_marker_t time) {
 
 double get_ticks_diff_time(time_marker_t time) {
 	clock_t tmp = clock();
-	return ((tmp - time.ticks) / (double)CLOCKS_PER_SEC);
+	return ((double)(tmp - time.ticks) / (double)CLOCKS_PER_SEC);
 }
 
 void print_flops(int flop, time_marker_t time) {
-	printf("MFLOPS with clock(): %e \n", (double) flop / (1000000 * get_ticks_diff_time(time)));
-	printf("MFLOPS with timeofday(): %e \n", (double) flop / (1000000 * get_ToD_diff_time(time)));
+	printf("MFLOPS with clock(): %g \n", (double) flop / (1000000 * get_ticks_diff_time(time)));
+	printf("MFLOPS with timeofday(): %g \n", (double) flop / (1000000 * get_ToD_diff_time(time)));
 }
