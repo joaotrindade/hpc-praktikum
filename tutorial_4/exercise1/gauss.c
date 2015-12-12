@@ -39,6 +39,8 @@ void init(double a[3][3], double b[3], double x[3]);
 
 /** performs gauss elimination */
 void gauss_elimination(double a[3][3], double b[3], double x[3]);
+void gauss_convert_to_echelon(double a[3][3], double b[3], double x[3]);
+void gauss_back_substituting(double a[3][3], double b[3], double x[3]);
 
 
 double a[NGLS][3][3];
@@ -96,10 +98,17 @@ void init(double a[3][3], double b[3], double x[3]) {
 
 
 void gauss_elimination(double a[3][3], double b[3], double x[3]) {
-	int n = 3;
-	int i,j,k;
 
         /* converting to echelon form */
+	gauss_convert_to_echelon(a, b, x);
+
+        /* back-substituting */
+	gauss_back_substituting(a, b, x);
+}
+
+void gauss_convert_to_echelon(double a[3][3], double b[3], double x[3]) {
+	int i, j, k, n = 3;
+
 	for (i = 0; i < n; i++) {
 
 		for (j = i+1; j < n; j++) {
@@ -117,7 +126,11 @@ void gauss_elimination(double a[3][3], double b[3], double x[3]) {
 	}
 
 
-        /* back-substituting */
+}
+
+void gauss_back_substituting(double a[3][3], double b[3], double x[3]) {
+	int i, j, n = 3;
+
 	for (i = n-1; i >= 0; i--) {
 		x[i] = b[i];
 		for(j = i+1; j < n; j++) {
@@ -125,7 +138,6 @@ void gauss_elimination(double a[3][3], double b[3], double x[3]) {
 		}
 	}
 }
-
 
 void print_matrix(char* name, double matrix[3][3]) {
 	int i, j;
