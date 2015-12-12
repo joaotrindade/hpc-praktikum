@@ -1,5 +1,6 @@
 ***** Execute folliwng commands to build and run the application manually *****
 ***** Author : Mantosh ****
+***** Caution : All computation is done on mac-login-intel.tum-mac.cos.lrz.de ****
 
  $ make
  $ sh run.sh
