@@ -1,0 +1,32 @@
+/var/slurmd-mpp2/job28393/slurm_script: line 19: cd: mydir: No such file or directory
+Info(Scalasca):qt module added.
+Info(Scalasca):png module added.
+INFO(Score-p): invoking mpi.intel version.
+Info(Scalasca):scorep/1.4 module added.
+Info(Scalasca):cube/4.3 module added.
+Info(Scalasca):invoking mpi.intel version.
+rank 0(x=0, y=0)rank 8(x=2, y=0)left: 4; right: 12; top: -1; bottom: 9
+rank 12(x=3, y=0)left: 8; right: -1; top: -1; bottom: 13rank 4(x=1, y=0)left: 0; right: 8; top: -1; bottom: 5
+rank 1(x=0, y=1)left: -1; right: 5; top: 0; bottom: 2
+rank 9(x=2, y=1)left: 5; right: 13; top: 8; bottom: 10
+rank 13(x=3, y=1)left: 9; right: -1; top: 12; bottom: 14
+rank 5(x=1, y=1)left: 1; right: 9; top: 4; bottom: 6
+rank 2(x=0, y=2)left: -1; right: 6; top: 1; bottom: 3
+rank 10(x=2, y=2)left: 6; right: 14; top: 9; bottom: 11
+rank 14(x=3, y=2)left: 10; right: -1; top: 13; bottom: 15
+rank 6(x=1, y=2)left: 2; right: 10; top: 5; bottom: 7
+rank 3(x=0, y=3)left: -1; right: 7; top: 2; bottom: -1
+rank 11(x=2, y=3)left: 7; right: 15; top: 10; bottom: -1
+rank 15(x=3, y=3)left: 11; right: -1; top: 14; bottom: -1
+rank 7(x=1, y=3)left: 3; right: 11; top: 6; bottom: -1
+left: -1; right: 4; top: -1; bottom: 1
+
+
+Starting Conjugated Gradients: (max iterations: 1000, cg_eps: 0.0001, gridsize1d: 6000)
+Starting norm of residuum: 1.85046e-12
+Target norm:               1.85046e-20
+Number of iterations: 1000 (max. 1000)
+Final norm of residuum: 4.70791e-18
+
+Parallel Needed time: 16.7258 s
+

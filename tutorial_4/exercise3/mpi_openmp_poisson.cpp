@@ -12,6 +12,7 @@
 #include <fstream>
 #include <sys/time.h>
 #include <mpi.h>
+#include <omp.h>
 #include <scorep/SCOREP_User.h>
 ///to store performance results
 std::ofstream myfile;
@@ -423,7 +424,7 @@ void g_scale(double* grid, double scalar)
 
 void g_scale_add(double* dest, double* src, double scalar)
 {
-	
+	#pragma omp parallel for
     for (int i = 1; i < gridpoints_subgrid_y-1; i++)
     {
         for (int j = 1; j < gridpoints_subgrid_x-1; j++)
@@ -770,6 +771,8 @@ void tearDownMPIStuff()
  */
 int main(int argc, char* argv[])
 {
+
+	
     /// MPI initilization
     MPI_Init(&argc, &argv);
 		
@@ -796,6 +799,8 @@ int main(int argc, char* argv[])
     store_grid(grid, "initial_condition_parallel.gnuplot");
     init_b(b);
     store_grid(b, "b.gnuplot");
+    
+    omp_set_num_threads(7);
 	
     // solve Poisson equation using CG method
     MPI_Barrier(cartesian_grid);

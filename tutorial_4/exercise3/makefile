@@ -1,7 +1,14 @@
-all: clean poisson
+all: clean poisson openmp serial
 
 poisson: mpi_poisson.cpp
 	scalasca -instrument --mpp=mpi mpiicc mpi_poisson.cpp -o mpi_app
+
+openmp: mpi_openmp_poisson.cpp
+	scalasca -instrument --mpp=mpi --thread=omp mpiicc -openmp mpi_openmp_poisson.cpp -o mpi_app_openmp
+
+serial: serial_poisson.cpp
+	scalasca -instrument icc serial_poisson.cpp -o serial_app
+
 
 clean:
 	rm -rf *.o
