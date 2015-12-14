@@ -423,7 +423,7 @@ void g_scale(double* grid, double scalar)
 
 void g_scale_add(double* dest, double* src, double scalar)
 {
-	
+	SCOREP_USER_FUNC_BEGIN()
     for (int i = 1; i < gridpoints_subgrid_y-1; i++)
     {
         for (int j = 1; j < gridpoints_subgrid_x-1; j++)
@@ -431,7 +431,7 @@ void g_scale_add(double* dest, double* src, double scalar)
 	    dest[(i*gridpoints_subgrid_x)+j] += (scalar*src[(i*gridpoints_subgrid_x)+j]);
 	}
     }
-
+	SCOREP_USER_FUNC_END()
 }
 
 /**
